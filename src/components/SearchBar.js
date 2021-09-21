@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import RadioInput from './RadioInput';
 
 export default function SearchBar(){
-  const [searchText, setSearchText] = useState('');
-  const [searchRadio, setSearchRadio] = useState('');
-  const [renderedElement, setRenderedElement] = useState({});
+  //provavelmente vamos usar isso ao inves de window.location.pathname na linha 24
+  // let location = useLocation();
+  const [searchText, setSearchText] = useState();
+  const [searchRadio, setSearchRadio] = useState();
+  const [filteredData, setFilteredData] = useState([]);
+  const buttonDisabled = searchRadio === undefined || searchText === undefined;
+  const dataReady = filteredData !== null;
 
+  useEffect(()=> {
+    if(filteredData === null){
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      setFilteredData([]);
+    }
+  },[filteredData]);
   const handleChange = ({target}) => {
-    console.log(target.name)
     if(target.name === "selected-radio"){
       setSearchRadio(target.value);
     } else {
@@ -16,29 +26,34 @@ export default function SearchBar(){
   }
 
   async function callAPI(){
+    //esse window provavelmente vai sair
+    let currentPage = window.location.pathname === 'bebidas' ? 'thecocktaildb' : 'themealdb';
     let url = ``;
 
-    //linha 21 ate 34 vai ser refatorada eventualmente;
     switch(searchRadio){
     case 'name':
-      url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`;
+      url = `https://www.${currentPage}.com/api/json/v1/1/search.php?s=${searchText}`;
       break;
     case 'ingredient':
-      url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchText}`
+      url = `https://www.${currentPage}.com/api/json/v1/1/filter.php?i=${searchText}`
       break;
     case 'first-letter':
       if(searchText.length > 1){
         alert('Sua busca deve conter somente 1 (um) caracter')
         return;
       }
-      url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchText}`
+      url = `https://www.${currentPage}.com/api/json/v1/1/search.php?f=${searchText}`
       break;
     default:
     }
-    const response = await fetch(url).then((res) => res.json());
-    setRenderedElement({response});
-}
 
+    const response = await fetch(url).then((res) => res.json());
+      
+    setFilteredData(response.meals);
+    // if(response.meals.length === 1){
+    //   history.push(`/${response.meals[0]['idMeal']}`)
+    // }
+}
   return(
     <form>  
       <input
@@ -54,10 +69,14 @@ export default function SearchBar(){
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ ()=> callAPI() }
+        onClick={ callAPI }
+        disabled={ buttonDisabled }
       >
         Procurar
       </button>
+
+      { dataReady && filteredData.map((meal) => <div>{meal['strMeal']}</div>)}
+
     </form>
   );
 }
