@@ -6,6 +6,7 @@ export default function RadioInput({ field, text }) {
     <label htmlFor={ field }>
       { text }
       <input
+        value={ field }
         type="radio"
         name="selected-search"
         id={ field }

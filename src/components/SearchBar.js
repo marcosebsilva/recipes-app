@@ -3,10 +3,19 @@ import RadioInput from './RadioInput';
 
 export default function SearchBar(){
   const [searchText, setSearchText] = useState('');
+  const [searchInput, setSearchInput ] = useState('');
 
   const handleChange = ({target}) => {
-    setSearchText(target.value);
+    if(target.name === "radio-inputs"){
+      setSearchInput(target.value);
+    } else {
+      setSearchText(target.value);
+    }
   }
+
+  // const callAPI = () => {
+
+  // };
 
   return(
     <form>  
@@ -15,9 +24,11 @@ export default function SearchBar(){
         data-testid="search-input"
         onChange={ handleChange }
       />
-      <RadioInput field="ingredient" text="Ingredientes"/>
-      <RadioInput field="name" text="Nome"/>
-      <RadioInput filed="first-letter" text="Primeira letra"/>
+      <section onChange={ handleChange } name="radio-inputs">
+        <RadioInput field="ingredient" text="Ingredientes"/>
+        <RadioInput field="name" text="Nome"/>
+        <RadioInput field="first-letter" text="Primeira letra"/>
+      </section>
       <button 
         data-testid="exec-search-btn"
       >
