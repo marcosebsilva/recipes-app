@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import recipesContext from '../context/recipesContext';
+import FetchAPI from '../components/FetchAPI';
 
 function RecipesProvider({ children }) {
   const { Provider } = recipesContext;
@@ -14,63 +15,41 @@ function RecipesProvider({ children }) {
   const [prevDrinkFilter, setPrevDrinkFilter] = useState();
   const [arrFiltered, setArrFiltered] = useState();
 
-  async function fetchAPI(url) {
-    const response = await fetch(url).then((res) => res.json());
-    return response;
-  }
-
-  async function foodState() {
-    const { meals } = await fetchAPI('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    setFoodData(meals);
-  }
-
-  async function foodCategoriesState() {
-    const { meals } = await fetchAPI('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
-    setFoodCategoriesData(meals);
-  }
-
-  async function filterByMainFoodIngredient(ingredient) {
-    const { meals } = await fetchAPI(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${ingredient}`);
-    setArrFiltered(meals);
-  }
-
-  async function drinkState() {
-    const { drinks } = await fetchAPI('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    setDrinkData(drinks);
-  }
-
-  async function drinkCategoriesState() {
-    const { drinks } = await fetchAPI('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
-    setDrinkCategoriesData(drinks);
-  }
-
-  async function filterByMainDrinkIngredient(ingredient) {
-    const { drinks } = await fetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${ingredient}`);
-    setArrFiltered(drinks);
-  }
-
-  useEffect(() => {
-    foodState();
-    foodCategoriesState();
-    drinkState();
-    drinkCategoriesState();
-  }, []);
-
-  useEffect(() => {
-    if (foodFilter) {
-      filterByMainFoodIngredient(foodFilter);
-    } else {
-      setArrFiltered(foodData);
+  async function StateData(item) {
+    if (item === 'food') {
+      const { meals } = await FetchAPI('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      setFoodData(meals);
     }
-  }, [foodFilter]);
 
-  useEffect(() => {
-    if (drinkFilter) {
-      filterByMainDrinkIngredient(drinkFilter);
-    } else {
-      setArrFiltered(drinkData);
+    if (item === 'drink') {
+      const { drinks } = await FetchAPI('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      setDrinkData(drinks);
     }
-  }, [drinkFilter]);
+  }
+
+  async function stateCategories(item) {
+    if (item === 'food') {
+      const { meals } = await FetchAPI('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+      setFoodCategoriesData(meals);
+    }
+
+    if (item === 'drink') {
+      const { drinks } = await FetchAPI('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+      setDrinkCategoriesData(drinks);
+    }
+  }
+
+  async function filterByMainIngredient(ingredient, item) {
+    if (item === 'food') {
+      const { meals } = await FetchAPI(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${ingredient}`);
+      setArrFiltered(meals);
+    }
+
+    if (item === 'drink') {
+      const { drinks } = await FetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${ingredient}`);
+      setArrFiltered(drinks);
+    }
+  }
 
   function handleClick({ value }, filter) {
     if (filter === 'food') {
@@ -95,6 +74,29 @@ function RecipesProvider({ children }) {
     }
   }
 
+  useEffect(() => {
+    StateData('food');
+    StateData('drink');
+    stateCategories('food');
+    stateCategories('drink');
+  }, []);
+
+  useEffect(() => {
+    if (foodFilter) {
+      filterByMainIngredient(foodFilter, 'food');
+    } else {
+      setArrFiltered(foodData);
+    }
+  }, [foodFilter]);
+
+  useEffect(() => {
+    if (drinkFilter) {
+      filterByMainIngredient(drinkFilter, 'drink');
+    } else {
+      setArrFiltered(drinkData);
+    }
+  }, [drinkFilter]);
+
   const obj = {
     foodData,
     foodCategoriesData,
@@ -105,7 +107,6 @@ function RecipesProvider({ children }) {
     arrFiltered,
     setFoodFilter,
     setDrinkFilter,
-    setArrFiltered,
     handleClick,
     divClick,
   };
