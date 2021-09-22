@@ -6,10 +6,12 @@ function RecipesProvider({ children }) {
   const { Provider } = recipesContext;
   const [foodData, setFoodData] = useState();
   const [foodCategoriesData, setFoodCategoriesData] = useState();
+  const [foodFilter, setFoodFilter] = useState();
+  const [prevFoodFilter, setPrevFoodFilter] = useState();
   const [drinkData, setDrinkData] = useState();
   const [drinkCategoriesData, setDrinkCategoriesData] = useState();
-  const [foodFilter, setFoodFilter] = useState();
   const [drinkFilter, setDrinkFilter] = useState();
+  const [prevDrinkFilter, setPrevDrinkFilter] = useState();
   const [arrFiltered, setArrFiltered] = useState();
 
   async function fetchAPI(url) {
@@ -57,24 +59,43 @@ function RecipesProvider({ children }) {
   useEffect(() => {
     if (foodFilter) {
       filterByMainFoodIngredient(foodFilter);
+    } else {
+      setArrFiltered(foodData);
     }
   }, [foodFilter]);
 
   useEffect(() => {
     if (drinkFilter) {
       filterByMainDrinkIngredient(drinkFilter);
+    } else {
+      setArrFiltered(drinkData);
     }
   }, [drinkFilter]);
+
+  function handleClick({ value }, filter) {
+    if (filter === 'food') {
+      setFoodFilter((!foodFilter || prevFoodFilter !== value) ? value : undefined);
+      setPrevFoodFilter(value);
+    }
+
+    if (filter === 'drink') {
+      setDrinkFilter((!drinkFilter || prevDrinkFilter !== value) ? value : undefined);
+      setPrevDrinkFilter(value);
+    }
+  }
 
   const obj = {
     foodData,
     foodCategoriesData,
+    foodFilter,
     drinkData,
     drinkCategoriesData,
+    drinkFilter,
     arrFiltered,
     setFoodFilter,
     setDrinkFilter,
     setArrFiltered,
+    handleClick,
   };
 
   return (

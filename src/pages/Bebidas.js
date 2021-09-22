@@ -6,14 +6,14 @@ function Bebidas() {
     drinkData,
     drinkCategoriesData,
     arrFiltered,
-    setDrinkFilter,
     setArrFiltered,
+    handleClick,
   } = useContext(recipesContext);
-  const TWELVE = 12;
-  const FIVE = 5;
   if (!drinkData || !drinkCategoriesData) {
     return <p>Loading...</p>;
   }
+  const TWELVE = 12;
+  const FIVE = 5;
   const drink = (!arrFiltered) ? drinkData : arrFiltered;
   return (
     <>
@@ -32,7 +32,7 @@ function Bebidas() {
               key={ index }
               type="button"
               value={ strCategory }
-              onClick={ ({ target }) => setDrinkFilter(target.value) }
+              onClick={ ({ target }) => handleClick(target, 'drink') }
             >
               { strCategory }
             </button>

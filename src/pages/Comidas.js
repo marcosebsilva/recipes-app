@@ -6,8 +6,8 @@ function Comidas() {
     foodData,
     foodCategoriesData,
     arrFiltered,
-    setFoodFilter,
     setArrFiltered,
+    handleClick,
   } = useContext(recipesContext);
   if (!foodData || !foodCategoriesData) {
     return <p>Loading...</p>;
@@ -32,7 +32,7 @@ function Comidas() {
               key={ index }
               type="button"
               value={ strCategory }
-              onClick={ ({ target }) => setFoodFilter(target.value) }
+              onClick={ ({ target }) => handleClick(target, 'food') }
             >
               { strCategory }
             </button>
