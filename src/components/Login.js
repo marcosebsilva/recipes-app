@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import recipesContext from '../context/recipesContext';
@@ -61,29 +60,6 @@ export default function Login() {
       >
         Entrar
       </button>
-=======
-import React from 'react';
-
-export default function Login() {
-  return (
-    <div>
-      <label htmlFor="email-input">
-        <input type="email" data-testid="email-input" />
-      </label>
-      <label htmlFor="password-input">
-        <input type="password" data-testid="password-input" />
-      </label>
-      {/* <label htmlFor="login-btn">
-        <button type="submit" data-testid="login-submit-btn" id="login-btn">
-          Entrar
-        </button> */}
-      {/* </label> */}
-      {/* <label htmlFor="login-button"> */}
-      <button type="submit" data-testid="login-submit-btn" id="login-button">
-        Entrar
-      </button>
-      {/* </label> */}
->>>>>>> 568bd2dd592ebba187c7774711aaeddfddb9eacf
     </div>
   );
 }
