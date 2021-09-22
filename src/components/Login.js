@@ -14,14 +14,14 @@ export default function Login() {
   function validateLogin() {
     const REJEX = /\S+@\S+\.\S+/;
     const SIX = 6;
-    if (password.length >= SIX && REJEX.test(email)) {
+    if (password.length > SIX && REJEX.test(email)) {
       return true;
     }
   }
 
   function handleSubmit() {
     const dataUser = {
-      user: email,
+      email,
     };
 
     localStorage.setItem('mealsToken', 1);
