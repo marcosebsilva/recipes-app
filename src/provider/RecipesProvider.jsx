@@ -8,6 +8,9 @@ function RecipesProvider({ children }) {
   const [foodCategoriesData, setFoodCategoriesData] = useState();
   const [drinkData, setDrinkData] = useState();
   const [drinkCategoriesData, setDrinkCategoriesData] = useState();
+  const [foodFilter, setFoodFilter] = useState();
+  const [drinkFilter, setDrinkFilter] = useState();
+  const [arrFiltered, setArrFiltered] = useState();
 
   async function fetchAPI(url) {
     const response = await fetch(url).then((res) => res.json());
@@ -24,6 +27,11 @@ function RecipesProvider({ children }) {
     setFoodCategoriesData(meals);
   }
 
+  async function filterByMainFoodIngredient(ingredient) {
+    const { meals } = await fetchAPI(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${ingredient}`);
+    setArrFiltered(meals);
+  }
+
   async function drinkState() {
     const { drinks } = await fetchAPI('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     setDrinkData(drinks);
@@ -34,6 +42,11 @@ function RecipesProvider({ children }) {
     setDrinkCategoriesData(drinks);
   }
 
+  async function filterByMainDrinkIngredient(ingredient) {
+    const { drinks } = await fetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${ingredient}`);
+    setArrFiltered(drinks);
+  }
+
   useEffect(() => {
     foodState();
     foodCategoriesState();
@@ -41,11 +54,28 @@ function RecipesProvider({ children }) {
     drinkCategoriesState();
   }, []);
 
+  useEffect(() => {
+    if (foodFilter) {
+      filterByMainFoodIngredient(foodFilter);
+    } else {
+      setArrFiltered(foodData);
+    }
+  }, [foodFilter]);
+
+  useEffect(() => {
+    if (drinkFilter) {
+      filterByMainDrinkIngredient(drinkFilter);
+    }
+  }, [drinkFilter]);
+
   const obj = {
     foodData,
     foodCategoriesData,
     drinkData,
     drinkCategoriesData,
+    arrFiltered,
+    setFoodFilter,
+    setDrinkFilter,
   };
 
   return (
