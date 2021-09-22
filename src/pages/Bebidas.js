@@ -7,6 +7,7 @@ function Bebidas() {
     drinkCategoriesData,
     arrFiltered,
     setDrinkFilter,
+    setArrFiltered,
   } = useContext(recipesContext);
   const TWELVE = 12;
   const FIVE = 5;
@@ -17,6 +18,13 @@ function Bebidas() {
   return (
     <>
       <>
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          onClick={ () => setArrFiltered(drinkData) }
+        >
+          All
+        </button>
         {drinkCategoriesData.filter((e, index) => index < FIVE)
           .map(({ strCategory }, index) => (
             <button

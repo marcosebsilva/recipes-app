@@ -7,6 +7,7 @@ function Comidas() {
     foodCategoriesData,
     arrFiltered,
     setFoodFilter,
+    setArrFiltered,
   } = useContext(recipesContext);
   if (!foodData || !foodCategoriesData) {
     return <p>Loading...</p>;
@@ -17,6 +18,13 @@ function Comidas() {
   return (
     <>
       <>
+        <button
+          data-testid="All-category-filter"
+          type="button"
+          onClick={ () => setArrFiltered(foodData) }
+        >
+          All
+        </button>
         {foodCategoriesData.filter((e, index) => index < FIVE)
           .map(({ strCategory }, index) => (
             <button

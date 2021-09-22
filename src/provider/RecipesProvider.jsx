@@ -57,8 +57,6 @@ function RecipesProvider({ children }) {
   useEffect(() => {
     if (foodFilter) {
       filterByMainFoodIngredient(foodFilter);
-    } else {
-      setArrFiltered(foodData);
     }
   }, [foodFilter]);
 
@@ -76,6 +74,7 @@ function RecipesProvider({ children }) {
     arrFiltered,
     setFoodFilter,
     setDrinkFilter,
+    setArrFiltered,
   };
 
   return (
