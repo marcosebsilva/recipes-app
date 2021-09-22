@@ -8,7 +8,7 @@ export default function RadioInput({ field, text }) {
       <input
         value={ field }
         type="radio"
-        name="selected-radio"
+        name="radio-option"
         id={ field }
         data-testid={ `${field}-search-radio` }
       />
