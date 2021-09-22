@@ -63,7 +63,7 @@ function RecipesProvider({ children }) {
     }
   }
 
-  // Terceiro parametro é a função push do history
+  // Terceiro parametro é a função push do history que está vindo do component MapContent.jsx que é renderizado nas pages Comidas.js e Bebidas.js
   function divClick(id, item, push) {
     if (item === 'drink') {
       push(`/bebidas/${id}`);
