@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
+import Login from './pages/Login';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
 import ComidasDetails from './pages/ComidasDetails';
@@ -25,7 +26,7 @@ function Routes() {
         <Route exact path="/perfil" />
         <Route exact path="/receitas-feitas" />
         <Route exact path="/receitas-favoritas" />
-        <Route path="/" />
+        <Route path="/" component={ Login } />
       </Switch>
     </BrowserRouter>
   );
