@@ -5,6 +5,8 @@ import FetchAPI from '../components/FetchAPI';
 
 function RecipesProvider({ children }) {
   const { Provider } = recipesContext;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [foodData, setFoodData] = useState();
   const [foodCategoriesData, setFoodCategoriesData] = useState();
   const [foodFilter, setFoodFilter] = useState();
@@ -14,6 +16,14 @@ function RecipesProvider({ children }) {
   const [drinkFilter, setDrinkFilter] = useState();
   const [prevDrinkFilter, setPrevDrinkFilter] = useState();
   const [arrFiltered, setArrFiltered] = useState();
+
+  function handleEmailChange({ target }) {
+    setEmail(target.value);
+  }
+
+  function handlePasswordChange({ target }) {
+    setPassword(target.value);
+  }
 
   async function StateData(item) {
     if (item === 'food') {
@@ -98,6 +108,10 @@ function RecipesProvider({ children }) {
   }, [drinkFilter]);
 
   const obj = {
+    handleEmailChange,
+    handlePasswordChange,
+    email,
+    password,
     foodData,
     foodCategoriesData,
     foodFilter,
