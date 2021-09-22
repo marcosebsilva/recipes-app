@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './Footer/Footer';
 
 export default function Login() {
   return (
@@ -9,16 +10,10 @@ export default function Login() {
       <label htmlFor="password-input">
         <input type="password" data-testid="password-input" />
       </label>
-      {/* <label htmlFor="login-btn">
-        <button type="submit" data-testid="login-submit-btn" id="login-btn">
-          Entrar
-        </button> */}
-      {/* </label> */}
-      {/* <label htmlFor="login-button"> */}
       <button type="submit" data-testid="login-submit-btn" id="login-button">
         Entrar
       </button>
-      {/* </label> */}
+      <Footer />
     </div>
   );
 }
