@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
 import recipesContext from '../context/recipesContext';
 
 function Bebidas() {
@@ -8,7 +9,9 @@ function Bebidas() {
     arrFiltered,
     setArrFiltered,
     handleClick,
+    divClick,
   } = useContext(recipesContext);
+  const { push } = useHistory();
   if (!drinkData || !drinkCategoriesData) {
     return <p>Loading...</p>;
   }
@@ -39,8 +42,13 @@ function Bebidas() {
           ))}
       </>
       {drink.filter((e, index) => index < TWELVE)
-        .map(({ strDrinkThumb, strDrink }, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
+        .map(({ idDrink, strDrinkThumb, strDrink }, index) => (
+          <div
+            data-testid={ `${index}-recipe-card` }
+            key={ index }
+            onClick={ () => divClick(idDrink, 'drink', push) }
+            aria-hidden="true"
+          >
             <img
               data-testid={ `${index}-card-img` }
               src={ strDrinkThumb }

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import recipesContext from '../context/recipesContext';
 
 function Comidas() {
@@ -8,13 +9,18 @@ function Comidas() {
     arrFiltered,
     setArrFiltered,
     handleClick,
+    divClick,
   } = useContext(recipesContext);
+  const { push } = useHistory();
   if (!foodData || !foodCategoriesData) {
     return <p>Loading...</p>;
   }
   const TWELVE = 12;
   const FIVE = 5;
   const food = (!arrFiltered) ? foodData : arrFiltered;
+  // function divClick(id) {
+  //   history.push(`/comidas/${id}`);
+  // }
   return (
     <>
       <>
@@ -39,8 +45,13 @@ function Comidas() {
           ))}
       </>
       {food.filter((e, index) => index < TWELVE)
-        .map(({ strMealThumb, strMeal }, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
+        .map(({ idMeal, strMealThumb, strMeal }, index) => (
+          <div
+            data-testid={ `${index}-recipe-card` }
+            key={ index }
+            onClick={ () => divClick(idMeal, 'food', push) }
+            aria-hidden="true"
+          >
             <img
               data-testid={ `${index}-card-img` }
               src={ strMealThumb }

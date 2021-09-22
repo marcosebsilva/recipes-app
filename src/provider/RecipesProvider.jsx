@@ -84,6 +84,17 @@ function RecipesProvider({ children }) {
     }
   }
 
+  // Terceiro parametro é a função push do history
+  function divClick(id, item, push) {
+    if (item === 'drink') {
+      push(`/bebidas/${id}`);
+    }
+
+    if (item === 'food') {
+      push(`/comidas/${id}`);
+    }
+  }
+
   const obj = {
     foodData,
     foodCategoriesData,
@@ -96,6 +107,7 @@ function RecipesProvider({ children }) {
     setDrinkFilter,
     setArrFiltered,
     handleClick,
+    divClick,
   };
 
   return (
