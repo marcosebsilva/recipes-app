@@ -148,7 +148,7 @@ describe('21 - Exiba o menu inferior apenas nas telas indicadas pelo protótipo'
   });
 });
 
-describe('22 - Redirecione a pessoa usuária para uma lista de cocktails ao clicar no ícone de bebidas', () => {
+describe.only('22 - Redirecione a pessoa usuária para uma lista de cocktails ao clicar no ícone de bebidas', () => {
   it('Redireciona para a rota correta', () => {
     cy.visit('http://localhost:3000/comidas');
 
@@ -157,7 +157,7 @@ describe('22 - Redirecione a pessoa usuária para uma lista de cocktails ao clic
   });
 });
 
-describe('23 - Redirecione a pessoa usuária para a tela de explorar ao clicar no ícone de exploração', () => {
+describe.only('23 - Redirecione a pessoa usuária para a tela de explorar ao clicar no ícone de exploração', () => {
   it('Redireciona para a rota correta', () => {
     cy.visit('http://localhost:3000/comidas');
 
@@ -166,7 +166,7 @@ describe('23 - Redirecione a pessoa usuária para a tela de explorar ao clicar n
   });
 });
 
-describe('24 - Redirecione a pessoa usuárua para uma lista de comidas ao clicar no ícone de comidas', () => {
+describe.only('24 - Redirecione a pessoa usuárua para uma lista de comidas ao clicar no ícone de comidas', () => {
   it('Redireciona para a rota correta', () => {
     cy.visit('http://localhost:3000/bebidas');
 
