@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import RadioInput from './RadioInput';
 import MockMainScreen from './MockMainScreen';
+import searchIcon from '../images/searchIcon.svg';
 
-export default function SearchBar({ location }) {
+export default function SearchBar() {
+  const location = useLocation();
   const history = useHistory();
   const [searchText, setSearchText] = useState();
   const [selectedRadio, setSelectedRadio] = useState();
@@ -71,13 +72,13 @@ export default function SearchBar({ location }) {
   }
   return (
     <>
-      <button
+      <img
         onClick={ () => setRenderButton(!renderButton) }
         data-testid="search-top-btn"
-        type="button"
-      >
-        Toggle
-      </button>
+        aria-hidden
+        src={ searchIcon }
+        alt="search icon"
+      />
       { renderButton && (
         <form>
           <input
@@ -104,7 +105,3 @@ export default function SearchBar({ location }) {
     </>
   );
 }
-
-SearchBar.propTypes = {
-  location: PropTypes.objectOf(String).isRequired,
-};
