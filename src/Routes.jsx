@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import Login from './pages/Login';
 import Comidas from './pages/Comidas';
+import Bebidas from './pages/Bebidas';
+
 // import Bebidas from './pages/Bebidas';
 // import ComidasDetails from './pages/ComidasDetails';
 // import BebidasDetails from './pages/BebidasDetails';
@@ -12,7 +14,7 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/comidas" component={ Comidas } />
-        <Route exact path="/bebidas" />
+        <Route exact path="/bebidas" component={ Bebidas } />
         <Route exact path="/comidas/:id" />
         <Route exact path="/bebidas/:id" />
         <Route exact path="/comidas/:id/in-progress" />
