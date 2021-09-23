@@ -22,7 +22,8 @@ export default function Perfil() {
 
   return (
     <div>
-      <Header><h1>Perfil</h1></Header>
+      <Header />
+      <h1>Perfil</h1>
       <h2 data-testid="profile-email">{Object.values(email)}</h2>
       <button
         type="button"
