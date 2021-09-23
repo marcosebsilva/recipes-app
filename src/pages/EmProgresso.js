@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useRouteMatch, useLocation } from 'react-router';
+import FoodCard from '../components/FoodCard';
 
 export default function EmProgresso() {
   const location = useLocation();
@@ -11,10 +12,9 @@ export default function EmProgresso() {
     ? 'thecocktaildb'
     : 'themealdb';
 
-  const foodType = {
-    thecocktaildb: 'Drink',
-    themealdb: 'Meal',
-  };
+  const foodType = api === 'thecocktaildb'
+    ? 'Drink'
+    : 'Meal';
 
   const getRecipeMemo = useCallback(async () => {
     const foodId = match.params.id;
@@ -32,9 +32,11 @@ export default function EmProgresso() {
   }, [getRecipeMemo]);
 
   return (
-    <div>
-      Manda salve
-      {recipe && recipe[`str${foodType[api]}`] }
-    </div>
+    <>
+      <h1>Teste</h1>
+      {recipe ? (
+        <FoodCard recipe={ recipe } foodType={ foodType } />
+      ) : <p>Carregando</p>}
+    </>
   );
 }
