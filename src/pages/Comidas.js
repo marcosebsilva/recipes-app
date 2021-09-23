@@ -1,26 +1,29 @@
 import React, { useContext } from 'react';
 import recipesContext from '../context/recipesContext';
+import Header from '../components/Header';
 import MapCategories from '../components/MapCategories';
 import MapContent from '../components/MapContent';
+import Footer from '../components/Footer/Footer';
 
 function Comidas() {
   const {
     foodData,
     foodCategoriesData,
-    arrFiltered,
+    arrFilteredFood,
     setFoodFilter,
     handleClick,
     divClick,
   } = useContext(recipesContext);
-  const food = (!arrFiltered) ? foodData : arrFiltered;
 
+  const food = (!arrFilteredFood) ? foodData : arrFilteredFood;
   if (!foodData || !foodCategoriesData) {
     return <p>Loading...</p>;
   }
 
   return (
-    <>
-      <>
+    <div>
+      <Header title="Comidas" />
+      <div>
         <button
           data-testid="All-category-filter"
           type="button"
@@ -28,10 +31,21 @@ function Comidas() {
         >
           All
         </button>
-        {MapCategories(foodCategoriesData, handleClick, 'food')}
-      </>
-      {MapContent(food, divClick, 'food')}
-    </>
+        <MapCategories
+          item={ foodCategoriesData }
+          handleClick={ handleClick }
+          page="food"
+        />
+      </div>
+      <div>
+        <MapContent
+          item={ food }
+          divClick={ divClick }
+          page="food"
+        />
+      </div>
+      <Footer />
+    </div>
   );
 }
 

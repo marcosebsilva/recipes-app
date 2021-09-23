@@ -1,13 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-function MapContent(item, divClick, page) {
+function MapContent({ item, divClick, page }) {
   const TWELVE = 12;
   const { push } = useHistory();
 
   if (page === 'food') {
     return (
-      <>
+      <div className="mapcontent">
         {item.filter((e, index) => index < TWELVE)
           .map(({ idMeal, strMealThumb, strMeal }, index) => (
             <div
@@ -23,7 +23,7 @@ function MapContent(item, divClick, page) {
               />
               <p data-testid={ `${index}-card-name` }>{strMeal}</p>
             </div>))}
-      </>
+      </div>
     );
   }
 

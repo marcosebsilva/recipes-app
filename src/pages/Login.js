@@ -9,12 +9,12 @@ export default function Login() {
     email,
     password,
   } = useContext(recipesContext);
-  const history = useHistory();
 
+  const history = useHistory();
   function validateLogin() {
-    const REJEX = /\S+@\S+\.\S+/;
+    const REGEX = /\S+@\S+\.\S+/;
     const SIX = 6;
-    if (password.length > SIX && REJEX.test(email)) {
+    if (password.length > SIX && REGEX.test(email)) {
       return true;
     }
   }

@@ -15,7 +15,13 @@ function RecipesProvider({ children }) {
   const [drinkCategoriesData, setDrinkCategoriesData] = useState();
   const [drinkFilter, setDrinkFilter] = useState();
   const [prevDrinkFilter, setPrevDrinkFilter] = useState();
-  const [arrFiltered, setArrFiltered] = useState();
+  const [arrFilteredFood, setArrFilteredFood] = useState();
+  const [arrFilteredDrink, setArrFilteredDrink] = useState();
+
+  const [searchText, setSearchText] = useState();
+  const [selectedRadio, setSelectedRadio] = useState();
+  const [renderButton, setRenderButton] = useState(false);
+  const [api, setApi] = useState();
 
   function handleEmailChange({ target }) {
     setEmail(target.value);
@@ -52,12 +58,12 @@ function RecipesProvider({ children }) {
   async function filterByMainIngredient(ingredient, item) {
     if (item === 'food') {
       const { meals } = await FetchAPI(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${ingredient}`);
-      setArrFiltered(meals);
+      setArrFilteredFood(meals);
     }
 
     if (item === 'drink') {
       const { drinks } = await FetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${ingredient}`);
-      setArrFiltered(drinks);
+      setArrFilteredDrink(drinks);
     }
   }
 
@@ -95,17 +101,17 @@ function RecipesProvider({ children }) {
     if (foodFilter) {
       filterByMainIngredient(foodFilter, 'food');
     } else {
-      setArrFiltered(foodData);
+      setArrFilteredFood(foodData);
     }
-  }, [foodFilter]);
+  }, [foodFilter, foodData]);
 
   useEffect(() => {
     if (drinkFilter) {
       filterByMainIngredient(drinkFilter, 'drink');
     } else {
-      setArrFiltered(drinkData);
+      setArrFilteredDrink(drinkData);
     }
-  }, [drinkFilter]);
+  }, [drinkFilter, drinkData]);
 
   const obj = {
     handleEmailChange,
@@ -118,11 +124,22 @@ function RecipesProvider({ children }) {
     drinkData,
     drinkCategoriesData,
     drinkFilter,
-    arrFiltered,
+    arrFilteredFood,
+    arrFilteredDrink,
+    setArrFilteredFood,
+    setArrFilteredDrink,
     setFoodFilter,
     setDrinkFilter,
     handleClick,
     divClick,
+    searchText,
+    setSearchText,
+    selectedRadio,
+    setSelectedRadio,
+    renderButton,
+    setRenderButton,
+    api,
+    setApi,
   };
 
   return (

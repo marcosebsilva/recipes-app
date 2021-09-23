@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MapCategories(item, handleClick, page) {
+function MapCategories({ item, handleClick, page }) {
   const FIVE = 5;
 
   if (page === 'food') {

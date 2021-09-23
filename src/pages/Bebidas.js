@@ -1,26 +1,29 @@
 import React, { useContext } from 'react';
 import recipesContext from '../context/recipesContext';
+import Header from '../components/Header';
 import MapCategories from '../components/MapCategories';
 import MapContent from '../components/MapContent';
+import Footer from '../components/Footer/Footer';
 
 function Bebidas() {
   const {
     drinkData,
     drinkCategoriesData,
-    arrFiltered,
+    arrFilteredDrink,
     setDrinkFilter,
     handleClick,
     divClick,
   } = useContext(recipesContext);
 
+  const drink = (!arrFilteredDrink) ? drinkData : arrFilteredDrink;
   if (!drinkData || !drinkCategoriesData) {
     return <p>Loading...</p>;
   }
 
-  const drink = (!arrFiltered) ? drinkData : arrFiltered;
   return (
-    <>
-      <>
+    <div>
+      <Header title="Bebidas" />
+      <div>
         <button
           data-testid="All-category-filter"
           type="button"
@@ -28,10 +31,21 @@ function Bebidas() {
         >
           All
         </button>
-        {MapCategories(drinkCategoriesData, handleClick, 'drink')}
-      </>
-      {MapContent(drink, divClick, 'drink')}
-    </>
+        <MapCategories
+          item={ drinkCategoriesData }
+          handleClick={ handleClick }
+          page="drink"
+        />
+      </div>
+      <div>
+        <MapContent
+          item={ drink }
+          divClick={ divClick }
+          page="drink"
+        />
+      </div>
+      <Footer />
+    </div>
   );
 }
 
