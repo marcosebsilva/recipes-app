@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import favoriteIcon from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 export default function FoodCard({ recipe, foodType }) {
   return (
@@ -22,8 +23,18 @@ export default function FoodCard({ recipe, foodType }) {
         {recipe.strCategory}
       </h3>
       <img
+        data-testid="favorite-btn"
         alt="Favorite icon"
         src={ favoriteIcon }
+        aria-hidden
+        onClick={ () => alert('Favorito vem aqui') }
+      />
+      <img
+        onClick={ () => alert('Compartilhar vem aqui') }
+        aria-hidden
+        data-testid="share-btn"
+        alt="Share icon"
+        src={ shareIcon }
       />
     </div>
   );
