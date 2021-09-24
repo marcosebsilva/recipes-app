@@ -5,10 +5,8 @@ import Login from './pages/Login';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
 import Perfil from './pages/Perfil';
-
-// import Bebidas from './pages/Bebidas';
-// import ComidasDetails from './pages/ComidasDetails';
-// import BebidasDetails from './pages/BebidasDetails';
+import ComidasDetails from './pages/ComidasDetails';
+import BebidasDetails from './pages/BebidasDetails';
 
 function Routes() {
   return (
@@ -16,8 +14,8 @@ function Routes() {
       <Switch>
         <Route exact path="/comidas" component={ Comidas } />
         <Route exact path="/bebidas" component={ Bebidas } />
-        <Route exact path="/comidas/:id" />
-        <Route exact path="/bebidas/:id" />
+        <Route exact path="/comidas/:id" component={ ComidasDetails } />
+        <Route exact path="/bebidas/:id" component={ BebidasDetails } />
         <Route exact path="/comidas/:id/in-progress" />
         <Route exact path="/bebidas/:id/in-progress" />
         <Route exact path="/explorar" />

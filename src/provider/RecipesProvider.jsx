@@ -1,12 +1,27 @@
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
 import recipesContext from '../context/recipesContext';
+import FetchAPI from '../components/FetchAPI';
 
 function RecipesProvider({ children }) {
   const { Provider } = recipesContext;
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [foodData, setFoodData] = useState();
+  const [foodCategoriesData, setFoodCategoriesData] = useState();
+  const [foodFilter, setFoodFilter] = useState();
+  const [prevFoodFilter, setPrevFoodFilter] = useState();
+  const [drinkData, setDrinkData] = useState();
+  const [drinkCategoriesData, setDrinkCategoriesData] = useState();
+  const [drinkFilter, setDrinkFilter] = useState();
+  const [prevDrinkFilter, setPrevDrinkFilter] = useState();
+  const [arrFilteredFood, setArrFilteredFood] = useState();
+  const [arrFilteredDrink, setArrFilteredDrink] = useState();
+
+  const [searchText, setSearchText] = useState();
+  const [selectedRadio, setSelectedRadio] = useState();
+  const [renderButton, setRenderButton] = useState(false);
+  const [api, setApi] = useState();
 
   function handleEmailChange({ target }) {
     setEmail(target.value);
@@ -16,15 +31,119 @@ function RecipesProvider({ children }) {
     setPassword(target.value);
   }
 
+  async function StateData(item) {
+    if (item === 'food') {
+      const { meals } = await FetchAPI('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      setFoodData(meals);
+    }
+
+    if (item === 'drink') {
+      const { drinks } = await FetchAPI('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      setDrinkData(drinks);
+    }
+  }
+
+  async function stateCategories(item) {
+    if (item === 'food') {
+      const { meals } = await FetchAPI('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+      setFoodCategoriesData(meals);
+    }
+
+    if (item === 'drink') {
+      const { drinks } = await FetchAPI('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+      setDrinkCategoriesData(drinks);
+    }
+  }
+
+  async function filterByMainIngredient(ingredient, item) {
+    if (item === 'food') {
+      const { meals } = await FetchAPI(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${ingredient}`);
+      setArrFilteredFood(meals);
+    }
+
+    if (item === 'drink') {
+      const { drinks } = await FetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${ingredient}`);
+      setArrFilteredDrink(drinks);
+    }
+  }
+
+  function handleClick({ value }, filter) {
+    if (filter === 'food') {
+      setFoodFilter((!foodFilter || prevFoodFilter !== value) ? value : undefined);
+      setPrevFoodFilter(value);
+    }
+
+    if (filter === 'drink') {
+      setDrinkFilter((!drinkFilter || prevDrinkFilter !== value) ? value : undefined);
+      setPrevDrinkFilter(value);
+    }
+  }
+
+  // Terceiro parametro é a função push do history que está vindo do component MapContent.jsx que é renderizado nas pages Comidas.js e Bebidas.js
+  function divClick(id, item, push) {
+    if (item === 'food') {
+      push(`/comidas/${id}`);
+    }
+
+    if (item === 'drink') {
+      push(`/bebidas/${id}`);
+    }
+  }
+
+  useEffect(() => {
+    StateData('food');
+    StateData('drink');
+    stateCategories('food');
+    stateCategories('drink');
+  }, []);
+
+  useEffect(() => {
+    if (foodFilter) {
+      filterByMainIngredient(foodFilter, 'food');
+    } else {
+      setArrFilteredFood(foodData);
+    }
+  }, [foodFilter, foodData]);
+
+  useEffect(() => {
+    if (drinkFilter) {
+      filterByMainIngredient(drinkFilter, 'drink');
+    } else {
+      setArrFilteredDrink(drinkData);
+    }
+  }, [drinkFilter, drinkData]);
+
   const obj = {
     handleEmailChange,
     handlePasswordChange,
     email,
     password,
+    foodData,
+    foodCategoriesData,
+    foodFilter,
+    drinkData,
+    drinkCategoriesData,
+    drinkFilter,
+    arrFilteredFood,
+    arrFilteredDrink,
+    setArrFilteredFood,
+    setArrFilteredDrink,
+    setFoodFilter,
+    setDrinkFilter,
+    handleClick,
+    divClick,
+    searchText,
+    setSearchText,
+    selectedRadio,
+    setSelectedRadio,
+    renderButton,
+    setRenderButton,
+    api,
+    setApi,
   };
 
   return (
-    <Provider value={ { obj } }>
+    <Provider value={ obj }>
       { children }
     </Provider>
   );
