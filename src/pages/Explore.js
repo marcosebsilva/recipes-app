@@ -14,7 +14,7 @@ function Explore() {
       <Header title="Explorar" />
       <button
         type="button"
-        name="food"
+        name="comidas"
         data-testid="explore-food"
         onClick={ exploreClick }
       >
@@ -22,7 +22,7 @@ function Explore() {
       </button>
       <button
         type="button"
-        name="drinks"
+        name="bebidas"
         data-testid="explore-drinks"
         onClick={ exploreClick }
       >
