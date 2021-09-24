@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useRouteMatch, useLocation } from 'react-router';
 import FoodCard from '../components/FoodCard';
 import FoodInstructions from '../components/FoodInstructions';
+import FetchAPI from '../components/FetchAPI';
 
 export default function EmProgresso() {
   const [recipe, setRecipe] = useState();
@@ -19,9 +20,9 @@ export default function EmProgresso() {
     ? 'Drink'
     : 'Meal';
   // pega a receita pelo ID (linha 47);
-  const getRecipeMemo = useCallback(async () => {
+  const getRecipeHook = useCallback(async () => {
     const foodId = match.params.id;
-    const response = await (await fetch(`https://www.${api}.com/api/json/v1/1/lookup.php?i=${foodId}`)).json();
+    const response = await FetchAPI(`https://www.${api}.com/api/json/v1/1/lookup.php?i=${foodId}`);
     try {
       const food = Object.values(response)[0][0];
       setRecipe(food);
@@ -31,7 +32,7 @@ export default function EmProgresso() {
   }, [api, match]);
 
   // cria um array so com os ingredientes validos para ser passado pro component FoodInstructions (linha 53)
-  const fillIngredientsMemo = useCallback((arr) => {
+  const fillIngredientsHook = useCallback((arr) => {
     const ingredientsList = [];
     const objectLength = Object.keys(arr).length;
 
@@ -46,14 +47,14 @@ export default function EmProgresso() {
   }, [setIngredients]);
 
   useEffect(() => {
-    getRecipeMemo();
-  }, [getRecipeMemo]);
+    getRecipeHook();
+  }, [getRecipeHook]);
 
   useEffect(() => {
     if (recipe !== undefined) {
-      fillIngredientsMemo(recipe);
+      fillIngredientsHook(recipe);
     }
-  }, [recipe, fillIngredientsMemo]);
+  }, [recipe, fillIngredientsHook]);
 
   return (
     <>

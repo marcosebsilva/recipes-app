@@ -3,14 +3,14 @@ import { useHistory } from 'react-router-dom';
 import recipesContext from '../context/recipesContext';
 
 export default function Login() {
-  const { obj: {
+  const {
     handleEmailChange,
     handlePasswordChange,
     email,
     password,
-  } } = useContext(recipesContext);
-  const history = useHistory();
+  } = useContext(recipesContext);
 
+  const history = useHistory();
   function validateLogin() {
     const REGEX = /\S+@\S+\.\S+/;
     const SIX = 6;
