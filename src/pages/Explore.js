@@ -26,7 +26,7 @@ function Explore() {
         data-testid="explore-drinks"
         onClick={ exploreClick }
       >
-        Explorar Bebibas
+        Explorar Bebidas
       </button>
       <Footer />
     </div>
