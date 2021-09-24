@@ -1,9 +1,9 @@
 import React from 'react';
-import './style.css';
 import { useHistory } from 'react-router';
 import drinksImg from '../../images/drinkIcon.svg';
 import exploreImg from '../../images/exploreIcon.svg';
 import mealImg from '../../images/mealIcon.svg';
+import './style.css';
 
 function Footer() {
   const history = useHistory();
