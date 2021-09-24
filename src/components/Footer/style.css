@@ -1,7 +1,17 @@
 .footer {
-  background-color: red;
+  background-color: rgb(150, 150, 150);
   bottom: 0;
-  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 50px;
   position: fixed;
   width: 100%;
+}
+
+.footer img {
+  height: 40px;
+  width: 40px;
+  margin: 5px 0px;
 }

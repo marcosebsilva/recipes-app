@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Login from './pages/Login';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
+import Explore from './pages/Explore';
 
 // import Bebidas from './pages/Bebidas';
 // import ComidasDetails from './pages/ComidasDetails';
@@ -19,7 +20,7 @@ function Routes() {
         <Route exact path="/bebidas/:id" />
         <Route exact path="/comidas/:id/in-progress" />
         <Route exact path="/bebidas/:id/in-progress" />
-        <Route exact path="/explorar" />
+        <Route exact path="/explorar" component={ Explore } />
         <Route exact path="/explorar/comidas" />
         <Route exact path="/explorar/bebidas" />
         <Route exact path="/explorar/comidas/ingredientes" />
