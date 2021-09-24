@@ -63,7 +63,8 @@ export default function EmProgresso() {
           <FoodCard recipe={ recipe } foodType={ foodType } />
           <FoodInstructions
             ingredients={ ingredients }
-            instructions={ recipe.strInstructions }
+            recipe={ recipe }
+            foodType={ foodType }
           />
           <button
             type="button"
