@@ -1,30 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 export default function FoodInstructions({ ingredients, recipe, foodType }) {
   const [inLocalStorage, setInLocalStorage] = useState();
+  const [disableButton, setDisableButton] = useState(true);
+  const history = useHistory();
 
   const { strInstructions } = recipe;
 
   const foodID = recipe[`id${foodType}`];
   const localStorageKey = foodType === 'Drink' ? 'cocktails' : 'meals';
 
+  function enableButton() {
+    const checkedElements = Array.from(
+      document.querySelectorAll('input[type=checkbox]:checked'),
+    );
+    setDisableButton(checkedElements.length !== ingredients.length);
+  }
+
   function updateLocalStorage() {
     const checked = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
       .map((element) => element.value);
 
     const prevStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    prevStorage[localStorageKey][foodID] = checked;
 
-    localStorage.setItem('inProgressRecipes', JSON.stringify({ ...prevStorage }));
+    const newStorage = {
+      ...prevStorage,
+      [localStorageKey]: {
+        ...prevStorage[localStorageKey],
+        [foodID]: checked,
+      },
+    };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify({ ...newStorage }));
+    enableButton();
   }
 
-  useEffect(() => {
-    const localStorageObject = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const foodKey = localStorageObject[localStorageKey][foodID];
+  const checkStorageHook = useCallback((storage) => {
+    if (storage[localStorageKey][foodID]) {
+      setInLocalStorage(storage[localStorageKey][foodID]);
+    } else {
+      setInLocalStorage([]);
+    }
+  }, [localStorageKey, foodID]);
 
-    if (foodKey) {
-      setInLocalStorage(foodKey);
+  useEffect(() => {
+    const localStorageObject = localStorage.getItem('inProgressRecipes');
+    if (localStorageObject) {
+      checkStorageHook(JSON.parse(localStorageObject));
     } else {
       const newStorage = {
         cocktails: {},
@@ -33,7 +57,7 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
       localStorage.setItem('inProgressRecipes', JSON.stringify(newStorage));
       setInLocalStorage([]);
     }
-  }, [localStorageKey, foodID]);
+  }, [localStorageKey, foodID, checkStorageHook]);
 
   return inLocalStorage ? (
     <>
@@ -57,6 +81,14 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
           </li>))}
       </ol>
       <p data-testid="instructions">{ strInstructions }</p>
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ disableButton }
+        onClick={ () => history.push('/receitas-feitas') }
+      >
+        Finalizar receita
+      </button>
     </>
   ) : <p>Loading</p>;
 }

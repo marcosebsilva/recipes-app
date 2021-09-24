@@ -26,7 +26,7 @@ export default function EmProgresso() {
       const food = Object.values(response)[0][0];
       setRecipe(food);
     } catch (error) {
-      alert('Esse rango ai nao existe');
+      global.alert('Esse rango ai nao existe');
     }
   }, [api, match]);
 
@@ -66,13 +66,6 @@ export default function EmProgresso() {
             recipe={ recipe }
             foodType={ foodType }
           />
-          <button
-            type="button"
-            data-testid="finish-recipe-btn"
-            onClick={ () => alert('Redireciona pra algum lugar') }
-          >
-            Finalizar receita
-          </button>
         </>
       ) : <p>Loading...</p>}
     </>
