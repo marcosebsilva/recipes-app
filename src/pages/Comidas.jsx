@@ -3,45 +3,47 @@ import recipesContext from '../context/recipesContext';
 import Header from '../components/Header';
 import MapCategories from '../components/MapCategories';
 import MapContent from '../components/MapContent';
-import Footer from '../components/Footer/Footer';
+import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
 
-function Bebidas() {
+function Comidas() {
   const {
-    drinkData,
-    drinkCategoriesData,
-    arrFilteredDrink,
-    setDrinkFilter,
+    foodData,
+    foodCategoriesData,
+    arrFilteredFood,
+    setFoodFilter,
     handleClick,
     divClick,
   } = useContext(recipesContext);
 
-  const drink = (!arrFilteredDrink) ? drinkData : arrFilteredDrink;
-  if (!drinkData || !drinkCategoriesData) {
+  const food = (!arrFilteredFood) ? foodData : arrFilteredFood;
+  if (!foodData || !foodCategoriesData) {
     return <p>Loading...</p>;
   }
 
   return (
     <div>
-      <Header title="Bebidas" />
+      <Header title="Comidas" />
+      <SearchBar />
       <div>
         <button
           data-testid="All-category-filter"
           type="button"
-          onClick={ () => setDrinkFilter(undefined) }
+          onClick={ () => setFoodFilter(undefined) }
         >
           All
         </button>
         <MapCategories
-          item={ drinkCategoriesData }
+          item={ foodCategoriesData }
           handleClick={ handleClick }
-          page="drink"
+          page="food"
         />
       </div>
       <div>
         <MapContent
-          item={ drink }
+          item={ food }
           divClick={ divClick }
-          page="drink"
+          page="food"
         />
       </div>
       <Footer />
@@ -49,4 +51,4 @@ function Bebidas() {
   );
 }
 
-export default Bebidas;
+export default Comidas;
