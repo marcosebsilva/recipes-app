@@ -7,7 +7,7 @@ function MapContent({ item, divClick, page }) {
 
   if (page === 'food') {
     return (
-      <div className="mapcontent">
+      <div>
         {item.filter((e, index) => index < TWELVE)
           .map(({ idMeal, strMealThumb, strMeal }, index) => (
             <div

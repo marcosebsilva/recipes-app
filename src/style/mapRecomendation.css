@@ -1,0 +1,6 @@
+.card-recomendation {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  overflow-y: hidden;
+}

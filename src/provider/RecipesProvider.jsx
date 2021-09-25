@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import recipesContext from '../context/recipesContext';
 import FetchAPI from '../components/FetchAPI';
@@ -10,14 +10,15 @@ function RecipesProvider({ children }) {
   const [foodData, setFoodData] = useState();
   const [foodCategoriesData, setFoodCategoriesData] = useState();
   const [foodFilter, setFoodFilter] = useState();
+  const [arrFilteredFood, setArrFilteredFood] = useState();
   const [prevFoodFilter, setPrevFoodFilter] = useState();
+  const [arrFoodId, setArrFoodId] = useState();
   const [drinkData, setDrinkData] = useState();
   const [drinkCategoriesData, setDrinkCategoriesData] = useState();
   const [drinkFilter, setDrinkFilter] = useState();
-  const [prevDrinkFilter, setPrevDrinkFilter] = useState();
-  const [arrFilteredFood, setArrFilteredFood] = useState();
   const [arrFilteredDrink, setArrFilteredDrink] = useState();
-
+  const [prevDrinkFilter, setPrevDrinkFilter] = useState();
+  const [arrDrinkId, setArrDrinkId] = useState();
   const [searchText, setSearchText] = useState();
   const [selectedRadio, setSelectedRadio] = useState();
   const [renderButton, setRenderButton] = useState(false);
@@ -79,13 +80,27 @@ function RecipesProvider({ children }) {
     }
   }
 
+  const filterById = useCallback(async (id, item) => {
+    if (item === 'food') {
+      const { meals } = await FetchAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+      setArrFoodId(meals);
+    }
+
+    if (item === 'drink') {
+      const { drinks } = await FetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+      setArrDrinkId(drinks);
+    }
+  }, []);
+
   // Terceiro parametro é a função push do history que está vindo do component MapContent.jsx que é renderizado nas pages Comidas.js e Bebidas.js
   function divClick(id, item, push) {
     if (item === 'food') {
+      fetch(id);
       push(`/comidas/${id}`);
     }
 
     if (item === 'drink') {
+      setArrDrinkId(id);
       push(`/bebidas/${id}`);
     }
   }
@@ -114,24 +129,24 @@ function RecipesProvider({ children }) {
   }, [drinkFilter, drinkData]);
 
   const obj = {
-    handleEmailChange,
-    handlePasswordChange,
     email,
     password,
     foodData,
     foodCategoriesData,
     foodFilter,
+    setFoodFilter,
+    arrFilteredFood,
+    setArrFilteredFood,
+    arrFoodId,
+    setArrFoodId,
     drinkData,
     drinkCategoriesData,
     drinkFilter,
-    arrFilteredFood,
-    arrFilteredDrink,
-    setArrFilteredFood,
-    setArrFilteredDrink,
-    setFoodFilter,
     setDrinkFilter,
-    handleClick,
-    divClick,
+    arrFilteredDrink,
+    setArrFilteredDrink,
+    arrDrinkId,
+    setArrDrinkId,
     searchText,
     setSearchText,
     selectedRadio,
@@ -140,6 +155,11 @@ function RecipesProvider({ children }) {
     setRenderButton,
     api,
     setApi,
+    handleEmailChange,
+    handlePasswordChange,
+    handleClick,
+    divClick,
+    filterById,
   };
 
   return (
