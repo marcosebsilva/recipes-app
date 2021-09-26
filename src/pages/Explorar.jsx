@@ -1,12 +1,14 @@
 import React from 'react';
-import Footer from '../components/Footer/Footer';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-export default function Bebidas() {
+function Explorar() {
   return (
     <div>
-      <Header title="Bebidas" />
+      <Header title="Explorar" />
       <Footer />
     </div>
   );
 }
+
+export default Explorar;

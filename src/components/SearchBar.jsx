@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import RadioInput from './RadioInput';
-import MockMainScreen from './MockMainScreen';
 import searchIcon from '../images/searchIcon.svg';
+import recipesContext from '../context/recipesContext';
 
 export default function SearchBar() {
+  const {
+    setArrFilteredFood,
+    setArrFilteredDrink,
+    searchText,
+    setSearchText,
+    selectedRadio,
+    setSelectedRadio,
+    renderButton,
+    setRenderButton,
+    api,
+    setApi,
+  } = useContext(recipesContext);
   const location = useLocation();
   const history = useHistory();
-  const [searchText, setSearchText] = useState();
-  const [selectedRadio, setSelectedRadio] = useState();
-  const [filteredData, setFilteredData] = useState([]);
-  const [renderButton, setRenderButton] = useState(false);
-  const [api, setApi] = useState();
 
   const buttonDisabled = selectedRadio === undefined || searchText === undefined;
-  const dataReady = filteredData !== null;
 
   // set api link
   useEffect(() => {
@@ -24,7 +30,7 @@ export default function SearchBar() {
     } else if (currentPage === '/comidas') {
       setApi('themealdb');
     }
-  }, [location]);
+  }, [location, setApi]);
 
   const handleChange = ({ target }) => {
     if (target.name === 'radio-option') {
@@ -36,7 +42,7 @@ export default function SearchBar() {
 
   async function callAPI() {
     if (selectedRadio === 'first-letter' && searchText.length > 1) {
-      alert('Sua busca deve conter somente 1 (um) caracter');
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
       return;
     }
 
@@ -65,9 +71,17 @@ export default function SearchBar() {
         history.push(`${location.pathname}/${foodID}`);
         return;
       }
-      setFilteredData(recipes);
+      if (foodType === 'Meal') {
+        const { meals } = obj;
+        setArrFilteredFood(meals);
+      }
+
+      if (foodType === 'Drink') {
+        const { drinks } = obj;
+        setArrFilteredDrink(drinks);
+      }
     } catch (err) {
-      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
   }
   return (
@@ -101,7 +115,6 @@ export default function SearchBar() {
           </button>
         </form>
       )}
-      {dataReady && <MockMainScreen data={ filteredData } /> }
     </>
   );
 }
