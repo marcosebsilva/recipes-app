@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function Explorar() {
+function Explore() {
   const history = useHistory();
   function exploreClick(e) {
     const { name } = e.target;
@@ -33,4 +33,4 @@ function Explorar() {
   );
 }
 
-export default Explorar;
+export default Explore;
