@@ -18,6 +18,7 @@ function MapContent({ item, divClick, page }) {
             >
               <img
                 data-testid={ `${index}-card-img` }
+                style={ { width: '340px' } }
                 src={ strMealThumb }
                 alt={ strMeal }
               />
@@ -40,6 +41,7 @@ function MapContent({ item, divClick, page }) {
             >
               <img
                 data-testid={ `${index}-card-img` }
+                style={ { width: '340px' } }
                 src={ strDrinkThumb }
                 alt={ strDrink }
               />

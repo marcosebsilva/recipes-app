@@ -15,7 +15,7 @@ function MapRecomendation({ item, page }) {
             >
               <img
                 data-testid={ `${index}-card-img` }
-                style={ { width: '180px' } }
+                style={ { width: '175px' } }
                 src={ strDrinkThumb }
                 alt={ strDrink }
               />
@@ -36,7 +36,7 @@ function MapRecomendation({ item, page }) {
             >
               <img
                 data-testid={ `${index}-card-img` }
-                style={ { width: '180px' } }
+                style={ { width: '175px' } }
                 src={ strMealThumb }
                 alt={ strMeal }
               />
