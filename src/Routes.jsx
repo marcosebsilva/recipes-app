@@ -7,6 +7,7 @@ import Bebidas from './pages/Bebidas';
 import Perfil from './pages/Perfil';
 import ComidasDetails from './pages/ComidasDetails';
 import BebidasDetails from './pages/BebidasDetails';
+import ReceitasFeitas from './pages/ReceitasFeitas';
 
 function Routes() {
   return (
@@ -25,7 +26,7 @@ function Routes() {
         <Route exact path="/explorar/bebidas/ingredientes" />
         <Route exact path="/explorar/comidas/area" />
         <Route exact path="/perfil" component={ Perfil } />
-        <Route exact path="/receitas-feitas" />
+        <Route exact path="/receitas-feitas" component={ ReceitasFeitas } />
         <Route exact path="/receitas-favoritas" />
         <Route path="/" component={ Login } />
       </Switch>
