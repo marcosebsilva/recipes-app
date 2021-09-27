@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import Login from './pages/Login';
 import Comidas from './pages/Comidas';
 import Bebidas from './pages/Bebidas';
+import ExplorarBebidasIngredientes from './pages/ExplorarBebidasIngredientes';
+import ExplorarComidasIngredientes from './pages/ExplorarComidaIngredientes';
 
 // import Bebidas from './pages/Bebidas';
 // import ComidasDetails from './pages/ComidasDetails';
