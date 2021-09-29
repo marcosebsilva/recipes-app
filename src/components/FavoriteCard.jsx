@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import copy from 'clipboard-copy';
 import shareBtn from '../images/shareIcon.svg';
 import blackHeart from '../images/blackHeartIcon.svg';
 
 function FavoriteCard(props) {
   const { filtered, deleteFavorite } = props;
   const history = useHistory();
+  const [msgShow, setMsgShow] = useState(false);
 
   const topTexHelper = (recipe) => {
     if (recipe.type === 'comida') {
@@ -16,13 +18,17 @@ function FavoriteCard(props) {
   };
 
   const shareHandler = (recipe) => {
-    const link = `localhost:3000/${recipe.type}s/${recipe.id}`;
-    global.alert('Link copiado!');
-    navigator.clipboard.writeText(link);
+    const link = `http://localhost:3000/${recipe.type}s/${recipe.id}`;
+    const ONE_SECOND = 1000;
+
+    copy(link);
+    setMsgShow(true);
+    setTimeout(() => {
+      setMsgShow(false);
+    }, ONE_SECOND);
   };
 
   const clickRedirect = (recipe) => {
-    console.log(recipe);
     history.push(`/${recipe.type}s/${recipe.id}`);
   };
 
@@ -36,6 +42,7 @@ function FavoriteCard(props) {
 
   return (
     <>
+      {msgShow && <p>Link copiado!</p>}
       {filtered.map((recipe, index) => {
         const title = topTexHelper(recipe);
         return (
@@ -55,7 +62,6 @@ function FavoriteCard(props) {
               aria-hidden="true"
             >
               {recipe.name}
-
             </p>
             <img
               src={ shareBtn }
