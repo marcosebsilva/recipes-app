@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import copy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
+import { logDOM } from '@testing-library/dom';
 import FetchAPI from '../components/FetchAPI';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
@@ -13,6 +14,7 @@ export default function ReceitasFeitas() {
   const [mealsList, setMeal] = useState();
   const [drinksList, setDrinks] = useState();
   const [showMessage, setShowMessage] = useState();
+  const [allRecipes, setAllRecipes] = useState();
   const history = useHistory();
 
   if (doneRecipesDois) {
@@ -25,22 +27,25 @@ export default function ReceitasFeitas() {
     async () => {
       const arrMeals = [];
       const arrDrinks = [];
+      const arrAllRecipes = [];
 
       await Promise.all(idRecipesMeals.map(async (item) => {
         const api = await FetchAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${item}`);
-        // console.log(api.meals[0]);
         await arrMeals.push(api.meals[0]);
+        await arrAllRecipes.push(api.meals[0]);
       }));
+
       await Promise.all(idRecipesDrinks.map(async (item) => {
         const api = await FetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${item}`);
-        // console.log(api.driks[0]);
         await arrDrinks.push(api.drinks[0]);
+        await arrAllRecipes.push(api.drinks[0]);
       }));
 
       setMeal(arrMeals);
-      // console.log(arrMeals);
+      setAllRecipes(arrAllRecipes);
+
       setDrinks(arrDrinks);
-      // console.log(arrDrinks);
+      setAllRecipes(arrAllRecipes);
     },
     [idRecipesMeals, idRecipesDrinks],
   );
@@ -72,22 +77,20 @@ export default function ReceitasFeitas() {
     }
   }
 
-  // const [{ idMeal, strCategory, strArea, strCategory, strMeal,  strMealThumb, strTags }] = meals;
-  // const [{ idDrink, strAlcoholic, strDrink,  strDrinksThumb, strCategory}] = drinks;
+  function filterButton(type) {
+    if (type === 'food') {
+      setAllRecipes(allRecipes.filter(({ idMeal }) => Number(idMeal) === Number(idRecipesMeals)));
+    }
 
-  // const doneRecipes = [{
-  //   id: {[idMeal, idDrink]},
-  //   type: { strCategory },
-  //   area: { strArea },
-  //   category: {[strCategory,strCategory]},
-  //   alcoholicOrNot: {strAlcoholic},
-  //   name: [strMeal, strDrink],
-  //   image: [strDrinksThumb, strMealThumb],
-  //   doneDate: {date},
-  //   tags: {strTags},
-  // }];
+    if (type === 'drink') {
+      setAllRecipes(allRecipes.filter(({ idDrink }) => Number(idDrink) === Number(idRecipesDrinks)));
+    }
 
-  // localStorage.setItem('doneRecipes', JSON.fy(doneRecipes));
+    if (type === undefined) {
+      setAllRecipes([...mealsList, ...drinksList]);
+    }
+  }
+  console.log(allRecipes);
 
   return (
 
@@ -95,10 +98,11 @@ export default function ReceitasFeitas() {
 
       <Header />
       <h1>Receitas Feitas</h1>
-      <button type="button" data-testid="filter-by-all-btn">All</button>
-      <button type="button" data-testid="filter-by-food-btn">Food</button>
-      <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
-      {mealsList
+      <button type="button" data-testid="filter-by-all-btn" onClick={ () => filterButton() }>All</button>
+      <button type="button" data-testid="filter-by-food-btn" onClick={ () => filterButton('food') }>Food</button>
+      <button type="button" data-testid="filter-by-drink-btn" onClick={ () => filterButton('drink') }>Drinks</button>
+
+      {allRecipes
         .map(({
           strMealThumb,
           strCategory,
@@ -113,7 +117,7 @@ export default function ReceitasFeitas() {
               key={ index }
               src={ strMealThumb }
               style={ { width: '340px' } }
-              alt="card-receita"
+              alt={ strMealThumb }
               data-testid={ `${index}-horizontal-image` }
               onClick={ () => redirect(mealsList, idMeal) }
             />
@@ -139,14 +143,15 @@ export default function ReceitasFeitas() {
 
           </>
         ))}
-      {drinksList.map(({ strDrinkThumb, strDrink, strAlcoholic, idDrink }, index) => (
+
+      {allRecipes.map(({ strDrinkThumb, strDrink, strAlcoholic, idDrink }, index) => (
         <>
           <img
             aria-hidden
             key={ index }
             src={ strDrinkThumb }
             style={ { width: '340px' } }
-            alt="card-receita"
+            alt={ strDrinkThumb }
             data-testid={ `${index}-horizontal-image` }
             onClick={ () => redirect(drinksList, idDrink) }
           />
@@ -170,6 +175,5 @@ export default function ReceitasFeitas() {
         </>
       ))}
     </div>
-
   );
 }
