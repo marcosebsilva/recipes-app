@@ -158,7 +158,6 @@ function RecipesProvider({ children }) {
     handleClick,
     divClick,
     filterById,
-    filterByMainIngredient,
   };
 
   return (
