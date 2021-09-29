@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import '../style/ReceitasFavoritas.css';
 
 const initialFavorites = () => {
-  const recipesJson = localStorage.getItem('favoriteRecipes');
+  const recipesJson = localStorage.getItem('favoriteRecipes') || '[]';
   console.log(recipesJson);
   const recipes = JSON.parse(recipesJson);
   return recipes;
