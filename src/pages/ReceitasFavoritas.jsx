@@ -6,7 +6,6 @@ import '../style/ReceitasFavoritas.css';
 
 const initialFavorites = () => {
   const recipesJson = localStorage.getItem('favoriteRecipes') || '[]';
-  console.log(recipesJson);
   const recipes = JSON.parse(recipesJson);
   return recipes;
 };
@@ -18,7 +17,6 @@ function ReceitasFavoritas() {
   const [filtered, setFiltered] = useState(favorites);
 
   const updateFiltered = (type = filter, recipes = favorites) => {
-    console.log(type);
     const newFiltered = recipes.filter(
       (fav) => fav.type === type || type === 'todos',
     );
@@ -29,7 +27,6 @@ function ReceitasFavoritas() {
   const deleteFavorite = (id) => {
     const favFiltered = favorites.filter((fav) => fav.id !== id);
     localStorage.setItem('favoriteRecipes', JSON.stringify(favFiltered));
-    console.log(favFiltered);
     setFavorites(favFiltered);
     updateFiltered(filter, favFiltered);
   };
