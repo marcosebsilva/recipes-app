@@ -98,39 +98,47 @@ export default function ReceitasFeitas() {
       <button type="button" data-testid="filter-by-all-btn">All</button>
       <button type="button" data-testid="filter-by-food-btn">Food</button>
       <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
-      {mealsList.map(({ strMealThumb, strCategory, strMeal, strTags, strArea, idMeal }, index) => (
-        <>
-          <img
-            aria-hidden
-            key={ index }
-            src={ strMealThumb }
-            style={ { width: '340px' } }
-            alt="card-receita"
-            data-testid={ `${index}-horizontal-image` }
-            onClick={ () => redirect(mealsList, idMeal) }
-          />
-          <h3
-            aria-hidden
-            data-testid={ `${index}-horizontal-name` }
-            onClick={ () => redirect(mealsList, idMeal) }
-          >
-            {strMeal}
-          </h3>
-          <p data-testid={ `${index}-horizontal-top-text` }>{strCategory}</p>
-          <p data-testid={ `${index}-${strTags}-horizontal-tag` }>{strTags}</p>
-          <p data-testid={ `${index}-horizontal-done-date` }>{date}</p>
-          <p>{strArea}</p>
-          <img
-            aria-hidden
-            src={ shareIcon }
-            alt="compartilhar"
-            data-testid={ `${index}-horizontal-share-btn` }
-            onClick={ () => copyLink(idMeal) }
-          />
-          {showMessage && <p>Link copiado!</p>}
+      {mealsList
+        .map(({
+          strMealThumb,
+          strCategory,
+          strMeal,
+          strTags,
+          strArea,
+          idMeal,
+        }, index) => (
+          <>
+            <img
+              aria-hidden
+              key={ index }
+              src={ strMealThumb }
+              style={ { width: '340px' } }
+              alt="card-receita"
+              data-testid={ `${index}-horizontal-image` }
+              onClick={ () => redirect(mealsList, idMeal) }
+            />
+            <h3
+              aria-hidden
+              data-testid={ `${index}-horizontal-name` }
+              onClick={ () => redirect(mealsList, idMeal) }
+            >
+              {strMeal}
+            </h3>
+            <p data-testid={ `${index}-horizontal-top-text` }>{strCategory}</p>
+            <p data-testid={ `${index}-${strTags}-horizontal-tag` }>{strTags}</p>
+            <p data-testid={ `${index}-horizontal-done-date` }>{date}</p>
+            <p>{strArea}</p>
+            <img
+              aria-hidden
+              src={ shareIcon }
+              alt="compartilhar"
+              data-testid={ `${index}-horizontal-share-btn` }
+              onClick={ () => copyLink(idMeal) }
+            />
+            {showMessage && <p>Link copiado!</p>}
 
-        </>
-      ))}
+          </>
+        ))}
       {drinksList.map(({ strDrinkThumb, strDrink, strAlcoholic, idDrink }, index) => (
         <>
           <img
