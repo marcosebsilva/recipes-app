@@ -32,17 +32,9 @@ function FavoriteCard(props) {
     history.push(`/${recipe.type}s/${recipe.id}`);
   };
 
-  // const unfavoriteHandler = (id) => {
-  //   const filteredById = favorites.filter((recipe) => recipe.id !== id);
-  //   console.log(recipes, filteredById);
-  //   setFavorites(filtered);
-  //   updateFiltered();
-  //   // localStorage.setItem('favoriteRecipes', JSON.stringify(filtered));
-  // };
-
   return (
     <>
-      {msgShow && <p>Link copiado!</p>}
+      {msgShow && <span>Link copiado!</span>}
       {filtered.map((recipe, index) => {
         const title = topTexHelper(recipe);
         return (
@@ -63,13 +55,14 @@ function FavoriteCard(props) {
             >
               {recipe.name}
             </p>
-            <img
-              src={ shareBtn }
-              alt="Share button"
-              data-testid={ `${index}-horizontal-share-btn` }
-              onClick={ () => shareHandler(recipe) }
-              aria-hidden="true"
-            />
+            <button type="button" onClick={ () => shareHandler(recipe) }>
+              <img
+                src={ shareBtn }
+                alt="Share button"
+                data-testid={ `${index}-horizontal-share-btn` }
+                aria-hidden="true"
+              />
+            </button>
             <img
               src={ blackHeart }
               alt="Favorite button"
