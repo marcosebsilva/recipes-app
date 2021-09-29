@@ -86,9 +86,7 @@ function FavoriteCard(props) {
 
 FavoriteCard.propTypes = {
   deleteFavorite: PropTypes.func.isRequired,
-  filtered: PropTypes.shape({
-    map: PropTypes.func.isRequired,
-  }).isRequired,
+  filtered: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default FavoriteCard;
