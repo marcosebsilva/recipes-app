@@ -7,7 +7,7 @@ function MapContent({ item, divClick, page }) {
 
   if (page === 'food') {
     return (
-      <div className="mapcontent">
+      <div>
         {item.filter((e, index) => index < TWELVE)
           .map(({ idMeal, strMealThumb, strMeal }, index) => (
             <div
@@ -18,6 +18,7 @@ function MapContent({ item, divClick, page }) {
             >
               <img
                 data-testid={ `${index}-card-img` }
+                style={ { width: '340px' } }
                 src={ strMealThumb }
                 alt={ strMeal }
               />
@@ -40,11 +41,14 @@ function MapContent({ item, divClick, page }) {
             >
               <img
                 data-testid={ `${index}-card-img` }
+                style={ { width: '340px' } }
                 src={ strDrinkThumb }
                 alt={ strDrink }
               />
               <p data-testid={ `${index}-card-name` }>{strDrink}</p>
             </div>))}
+        { console.log(item)}
+        ;
       </>
     );
   }

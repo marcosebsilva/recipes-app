@@ -1,10 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Footer from '../components/Footer/Footer';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 export default function Perfil() {
   const email = JSON.parse(localStorage.getItem('user'));
+
   const history = useHistory();
 
   function handleDoneRecipes() {
@@ -22,9 +23,10 @@ export default function Perfil() {
 
   return (
     <div>
-      <Header />
-      <h1>Perfil</h1>
-      <h2 data-testid="profile-email">{Object.values(email)}</h2>
+      <Header title="Perfil" />
+      <h2 data-testid="profile-email">
+        {Object.values((!email) ? 'email@email.com' : email)}
+      </h2>
       <button
         type="button"
         data-testid="profile-done-btn"

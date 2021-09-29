@@ -3,7 +3,8 @@ import recipesContext from '../context/recipesContext';
 import Header from '../components/Header';
 import MapCategories from '../components/MapCategories';
 import MapContent from '../components/MapContent';
-import Footer from '../components/Footer/Footer';
+import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
 
 function Bebidas() {
   const {
@@ -23,6 +24,7 @@ function Bebidas() {
   return (
     <div>
       <Header title="Bebidas" />
+      <SearchBar />
       <div>
         <button
           data-testid="All-category-filter"

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import drinksImg from '../../images/drinkIcon.svg';
-import exploreImg from '../../images/exploreIcon.svg';
-import mealImg from '../../images/mealIcon.svg';
-import './style.css';
+import drinksImg from '../images/drinkIcon.svg';
+import exploreImg from '../images/exploreIcon.svg';
+import mealImg from '../images/mealIcon.svg';
+import '../style/Footer.css';
 
 function Footer() {
   const history = useHistory();
@@ -37,7 +37,7 @@ function Footer() {
         data-testid="food-bottom-btn"
         onClick={ clickHandle }
         aria-hidden="true"
-        name="explorar/comidas"
+        name="comidas"
       />
     </div>
   );
