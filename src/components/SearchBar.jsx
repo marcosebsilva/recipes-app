@@ -94,7 +94,7 @@ export default function SearchBar() {
         alt="search icon"
       />
       { renderButton && (
-        <form>
+        <form className="search-bar">
           <input
             type="text"
             data-testid="search-input"
