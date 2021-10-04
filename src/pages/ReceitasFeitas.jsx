@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import copy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
-import { logDOM } from '@testing-library/dom';
 import FetchAPI from '../components/FetchAPI';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
@@ -14,7 +13,10 @@ export default function ReceitasFeitas() {
   const [mealsList, setMeal] = useState();
   const [drinksList, setDrinks] = useState();
   const [showMessage, setShowMessage] = useState();
-  const [allRecipes, setAllRecipes] = useState();
+  const [allRecipes, setAllRecipes] = useState({
+    meals: [],
+    drinks: [],
+  });
   const history = useHistory();
 
   if (doneRecipesDois) {
@@ -42,10 +44,8 @@ export default function ReceitasFeitas() {
       }));
 
       setMeal(arrMeals);
-      setAllRecipes(arrAllRecipes);
-
       setDrinks(arrDrinks);
-      setAllRecipes(arrAllRecipes);
+      setAllRecipes({ meals: arrMeals, drinks: arrDrinks });
     },
     [idRecipesMeals, idRecipesDrinks],
   );
@@ -77,20 +77,21 @@ export default function ReceitasFeitas() {
     }
   }
 
+  const { meals, drinks } = (allRecipes);
+
   function filterButton(type) {
     if (type === 'food') {
-      setAllRecipes(allRecipes.filter(({ idMeal }) => Number(idMeal) === Number(idRecipesMeals)));
+      setAllRecipes({ meals: mealsList, drinks: [] });
     }
 
     if (type === 'drink') {
-      setAllRecipes(allRecipes.filter(({ idDrink }) => Number(idDrink) === Number(idRecipesDrinks)));
+      setAllRecipes({ meals: [], drinks: drinksList });
     }
 
     if (type === undefined) {
-      setAllRecipes([...mealsList, ...drinksList]);
+      setAllRecipes({ meals: mealsList, drinks: drinksList });
     }
   }
-  console.log(allRecipes);
 
   return (
 
@@ -98,11 +99,29 @@ export default function ReceitasFeitas() {
 
       <Header />
       <h1>Receitas Feitas</h1>
-      <button type="button" data-testid="filter-by-all-btn" onClick={ () => filterButton() }>All</button>
-      <button type="button" data-testid="filter-by-food-btn" onClick={ () => filterButton('food') }>Food</button>
-      <button type="button" data-testid="filter-by-drink-btn" onClick={ () => filterButton('drink') }>Drinks</button>
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        onClick={ () => filterButton() }
+      >
+        All
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-food-btn"
+        onClick={ () => filterButton('food') }
+      >
+        Food
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        onClick={ () => filterButton('drink') }
+      >
+        Drinks
+      </button>
 
-      {allRecipes
+      {meals
         .map(({
           strMealThumb,
           strCategory,
@@ -144,7 +163,7 @@ export default function ReceitasFeitas() {
           </>
         ))}
 
-      {allRecipes.map(({ strDrinkThumb, strDrink, strAlcoholic, idDrink }, index) => (
+      {drinks.map(({ strDrinkThumb, strDrink, strAlcoholic, idDrink }, index) => (
         <>
           <img
             aria-hidden
