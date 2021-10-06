@@ -10,7 +10,6 @@ function Comidas() {
     foodData,
     foodCategoriesData,
     arrFilteredFood,
-    setFoodFilter,
     handleClick,
     divClick,
   } = useContext(recipesContext);

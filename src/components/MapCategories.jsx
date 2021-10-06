@@ -22,7 +22,7 @@ function MapCategories({ item, handleClick, page }) {
           .map(({ strCategory }, index) => (
             <button
               className={
-                `categories__card categories__card--${strCategory.toLowerCase()}` 
+                `categories__card categories__card--${strCategory.toLowerCase()}`
               }
               data-testid={ `${strCategory}-category-filter` }
               key={ index }
