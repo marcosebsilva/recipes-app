@@ -1,6 +1,7 @@
 * {
   border: none;
   box-sizing: border-box;
+  color: white;
   font-family: Ubuntu , sans-serif;
   margin: none;
   text-decoration: none;
@@ -148,6 +149,7 @@
 /* main content */
 .main {
   margin: auto;
+  margin-bottom: 50px;
   width: calc(100% - (8px * 2));
 }
 
@@ -184,5 +186,4 @@
   max-width: 340px;
   min-width: 340px;
   object-fit: cover;
-  position: relative;
 }
