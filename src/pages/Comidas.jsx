@@ -20,22 +20,20 @@ function Comidas() {
   }
 
   return (
-    <div className="foods-page">
+    <>
       <Header searchBar title="Comidas" />
       <MapCategories
         item={ foodCategoriesData }
         handleClick={ handleClick }
         page="food"
       />
-      <div>
-        <MapContent
-          item={ food }
-          divClick={ divClick }
-          page="food"
-        />
-      </div>
+      <MapContent
+        item={ food }
+        divClick={ divClick }
+        page="food"
+      />
       <Footer />
-    </div>
+    </>
   );
 }
 

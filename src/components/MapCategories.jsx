@@ -9,7 +9,7 @@ function MapCategories({ item, handleClick, page }) {
 
   if (page === 'food') {
     return (
-      <div className="categories">
+      <nav className="categories">
         <button
           className="categories__card categories__card--all"
           data-testid="All-category-filter"
@@ -33,13 +33,13 @@ function MapCategories({ item, handleClick, page }) {
               { strCategory }
             </button>
           ))}
-      </div>
+      </nav>
     );
   }
 
   if (page === 'drink') {
     return (
-      <div className="categories">
+      <nav className="categories">
         <button
           className="categories__card"
           data-testid="All-category-filter"
@@ -63,7 +63,7 @@ function MapCategories({ item, handleClick, page }) {
               { strCategory }
             </button>
           ))}
-      </div>
+      </nav>
     );
   }
 }

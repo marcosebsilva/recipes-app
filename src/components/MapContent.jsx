@@ -7,47 +7,63 @@ function MapContent({ item, divClick, page }) {
 
   if (page === 'food') {
     return (
-      <div>
+      <main className="main">
         {item.filter((e, index) => index < TWELVE)
           .map(({ idMeal, strMealThumb, strMeal }, index) => (
-            <div
+            <button
+              type="button"
+              className="recipe-card"
               data-testid={ `${index}-recipe-card` }
               key={ index }
               onClick={ () => divClick(idMeal, 'food', push) }
               aria-hidden="true"
             >
               <img
+                className="recipe-card__image"
                 data-testid={ `${index}-card-img` }
                 style={ { width: '340px' } }
                 src={ strMealThumb }
                 alt={ strMeal }
               />
-              <p data-testid={ `${index}-card-name` }>{strMeal}</p>
-            </div>))}
-      </div>
+              <h3
+                className="recipe-card__title"
+                data-testid={ `${index}-card-name` }
+              >
+                {strMeal}
+              </h3>
+            </button>))}
+      </main>
     );
   }
 
   if (page === 'drink') {
     return (
-      <>
+      <main className="main">
         {item.filter((e, index) => index < TWELVE)
           .map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-            <div
+            <button
+              type="button"
+              className="recipe-card"
               data-testid={ `${index}-recipe-card` }
               key={ index }
               onClick={ () => divClick(idDrink, 'drink', push) }
               aria-hidden="true"
             >
               <img
+                className="recipe-card__image"
                 data-testid={ `${index}-card-img` }
                 style={ { width: '340px' } }
                 src={ strDrinkThumb }
                 alt={ strDrink }
               />
-              <p data-testid={ `${index}-card-name` }>{strDrink}</p>
-            </div>))}
-      </>
+              <h3
+                data-testid={ `${index}-card-name` }
+                className="recipe-card__title"
+              >
+                {strDrink}
+              </h3>
+            </button>))}
+      </main>
     );
   }
 }
