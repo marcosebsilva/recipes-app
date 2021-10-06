@@ -63,7 +63,7 @@
 
 /* ---------------- */
 .foods-page {
-  background-color: blue;
+  /* background-color: blue; */
   width: 100%;
 }
 
@@ -75,6 +75,7 @@
   justify-content: space-between;
   padding: 0 14px;
   position: fixed;
+  top: 0;
   width: 100vw;
 }
 
@@ -101,3 +102,50 @@
   top: 45px;
   width: 100%;
 }
+
+.categories {
+  display: flex;
+  height: 45px;
+
+  /* header position (45) + margin(12) */
+  margin-bottom: 28px;
+  margin-top: 57px;
+  overflow-x: scroll;
+}
+
+.categories::-webkit-scrollbar {
+  height: 0;
+}
+
+.categories__card {
+  border-radius: 10px;
+  color: white;
+  height: 45px;
+  margin-right: 10px;
+  min-width: 100px;
+}
+
+.categories__card--all {
+  background-color: #5e5e5e;
+}
+
+.categories__card--beef {
+  background-color: #e9ce88;
+}
+
+.categories__card--breakfast {
+  background-color: #81520d;
+}
+
+.categories__card--chicken {
+  background-color: green;
+}
+
+.categories__card--dessert {
+  background-color: cyan;
+}
+
+.categories__card--goat {
+  background-color: yellow;
+}
+

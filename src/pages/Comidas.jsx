@@ -23,20 +23,11 @@ function Comidas() {
   return (
     <div className="foods-page">
       <Header searchBar title="Comidas" />
-      <div>
-        <button
-          data-testid="All-category-filter"
-          type="button"
-          onClick={ () => setFoodFilter(undefined) }
-        >
-          All
-        </button>
-        <MapCategories
-          item={ foodCategoriesData }
-          handleClick={ handleClick }
-          page="food"
-        />
-      </div>
+      <MapCategories
+        item={ foodCategoriesData }
+        handleClick={ handleClick }
+        page="food"
+      />
       <div>
         <MapContent
           item={ food }
