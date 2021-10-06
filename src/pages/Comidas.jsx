@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import MapCategories from '../components/MapCategories';
 import MapContent from '../components/MapContent';
 import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
 
 function Comidas() {
   const {
@@ -22,6 +23,7 @@ function Comidas() {
   return (
     <>
       <Header searchBar title="Comidas" />
+      <SearchBar />
       <MapCategories
         item={ foodCategoriesData }
         handleClick={ handleClick }

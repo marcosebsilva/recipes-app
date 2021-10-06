@@ -41,7 +41,7 @@ function MapCategories({ item, handleClick, page }) {
     return (
       <nav className="categories">
         <button
-          className="categories__card"
+          className="categories__card categories__card--all"
           data-testid="All-category-filter"
           type="button"
           onClick={ () => setFoodFilter(undefined) }

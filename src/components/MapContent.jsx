@@ -9,7 +9,7 @@ function MapContent({ item, divClick, page }) {
     return (
       <main className="main">
         {item.filter((e, index) => index < TWELVE)
-          .map(({ idMeal, strMealThumb, strMeal }, index) => (
+          .map(({ idMeal, strMealThumb, strMeal, strCategory }, index) => (
             <button
               type="button"
               className="recipe-card"
@@ -31,6 +31,10 @@ function MapContent({ item, divClick, page }) {
               >
                 {strMeal}
               </h3>
+              { strCategory && (
+                <p className="recipe-card__category">
+                  {strCategory}
+                </p>) }
             </button>))}
       </main>
     );
@@ -41,6 +45,7 @@ function MapContent({ item, divClick, page }) {
       <main className="main">
         {item.filter((e, index) => index < TWELVE)
           .map(({ idDrink, strDrinkThumb, strDrink }, index) => (
+          
             <button
               type="button"
               className="recipe-card"

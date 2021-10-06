@@ -11,7 +11,6 @@ function Bebidas() {
     drinkData,
     drinkCategoriesData,
     arrFilteredDrink,
-    setDrinkFilter,
     handleClick,
     divClick,
   } = useContext(recipesContext);
@@ -22,32 +21,21 @@ function Bebidas() {
   }
 
   return (
-    <div>
-      <Header title="Bebidas" />
+    <>
+      <Header searchBar title="Bebidas" />
       <SearchBar />
-      <div>
-        <button
-          data-testid="All-category-filter"
-          type="button"
-          onClick={ () => setDrinkFilter(undefined) }
-        >
-          All
-        </button>
-        <MapCategories
-          item={ drinkCategoriesData }
-          handleClick={ handleClick }
-          page="drink"
-        />
-      </div>
-      <div>
-        <MapContent
-          item={ drink }
-          divClick={ divClick }
-          page="drink"
-        />
-      </div>
+      <MapCategories
+        item={ drinkCategoriesData }
+        handleClick={ handleClick }
+        page="drink"
+      />
+      <MapContent
+        item={ drink }
+        divClick={ divClick }
+        page="drink"
+      />
       <Footer />
-    </div>
+    </>
   );
 }
 

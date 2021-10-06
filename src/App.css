@@ -1,7 +1,6 @@
 * {
   border: none;
   box-sizing: border-box;
-  color: white;
   font-family: Ubuntu , sans-serif;
   margin: none;
   text-decoration: none;
@@ -73,6 +72,7 @@
   position: fixed;
   top: 0;
   width: 100vw;
+  z-index: 1000;
 }
 
 .header__title {
@@ -103,10 +103,8 @@
 .categories {
   display: flex;
   height: 45px;
-
-  /* header position (45) + margin(12) */
   margin-bottom: 28px;
-  margin-top: 57px;
+  margin-top: 30px;
   overflow-x: scroll;
 }
 
@@ -115,6 +113,7 @@
 }
 
 .categories__card {
+  background-color: #9c9797;
   border-radius: 10px;
   color: white;
   height: 45px;
@@ -123,28 +122,9 @@
 }
 
 .categories__card--all {
-  background-color: #5e5e5e;
+  background-color: #474343;
 }
 
-.categories__card--beef {
-  background-color: #e9ce88;
-}
-
-.categories__card--breakfast {
-  background-color: #81520d;
-}
-
-.categories__card--chicken {
-  background-color: green;
-}
-
-.categories__card--dessert {
-  background-color: cyan;
-}
-
-.categories__card--goat {
-  background-color: yellow;
-}
 
 /* main content */
 .main {
@@ -166,6 +146,10 @@
   overflow: hidden;
 }
 
+.recipe-card:active {
+  transform: scale(0.97);
+}
+
 .recipe-card__title {
   align-self: center;
   color: white;
@@ -175,6 +159,8 @@
   justify-self: start;
   margin-bottom: 0;
   margin-left: 10px;
+  text-align: start;
+  width: 100%;
 }
 
 .recipe-card__image {
@@ -186,4 +172,23 @@
   max-width: 340px;
   min-width: 340px;
   object-fit: cover;
+}
+
+.recipe-card__category {
+  align-self: end;
+  background-color: #c09656;
+  border-radius: 20px 0 10px;
+  color: white;
+  display: block;
+  font-size: 8px;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  justify-self: end;
+  left: 10px;
+  margin-bottom: 0;
+  padding: 3px 5px;
+  position: relative;
+  text-align: center;
+  top: 1px;
+  width: 70px;
 }
