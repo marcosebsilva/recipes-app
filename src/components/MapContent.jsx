@@ -45,7 +45,6 @@ function MapContent({ item, divClick, page }) {
       <main className="main">
         {item.filter((e, index) => index < TWELVE)
           .map(({ idDrink, strDrinkThumb, strDrink }, index) => (
-          
             <button
               type="button"
               className="recipe-card"
