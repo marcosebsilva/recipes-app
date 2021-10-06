@@ -23,6 +23,7 @@ function RecipesProvider({ children }) {
   const [selectedRadio, setSelectedRadio] = useState();
   const [renderButton, setRenderButton] = useState(false);
   const [api, setApi] = useState();
+  const [favorites, setFavorites] = useState([]);
 
   function handleEmailChange({ target }) {
     setEmail(target.value);
@@ -158,6 +159,8 @@ function RecipesProvider({ children }) {
     handleClick,
     divClick,
     filterById,
+    favorites,
+    setFavorites,
   };
 
   return (
