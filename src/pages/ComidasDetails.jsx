@@ -96,32 +96,46 @@ function ComidasDetails({ match: { params: { id } } }) {
   };
 
   return (
-    <div>
-      <div>
+    <main className="main-details">
+      <section className="details-card">
         <img
+          className="details-card__image"
           data-testid="recipe-photo"
           style={ { width: '340px' } }
           src={ strMealThumb }
           alt={ strMeal }
         />
-        <h3 data-testid="recipe-title">{strMeal}</h3>
-        <p data-testid="recipe-category">{strCategory}</p>
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? favotiteHeartIcon : heartIcon }
-          alt="Favoritar"
-          onClick={ () => clickFavoriteButton(id) }
-          aria-hidden
-        />
-        <img
-          data-testid="share-btn"
-          src={ shareIcon }
-          alt="Compartilhar"
-          onClick={ () => copyLink(id) }
-          aria-hidden
-        />
-        {showMessage && <p>Link copiado!</p>}
+        <section>
+          <h3 data-testid="recipe-title" className="details-card__title">{strMeal}</h3>
+          <p
+            data-testid="recipe-category"
+            className="details-card__subtitle"
+          >
+            {strCategory}
+          </p>
+        </section>
+        <div className="details-card__buttons">
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? favotiteHeartIcon : heartIcon }
+            alt="Favoritar"
+            onClick={ () => clickFavoriteButton(id) }
+            aria-hidden
+          />
+          <img
+            data-testid="share-btn"
+            src={ shareIcon }
+            alt="Compartilhar"
+            onClick={ () => copyLink(id) }
+            aria-hidden
+          />
+        </div>
+      </section>
+      {showMessage && <div className="copied-link">Link copiado!</div>}
+      <section className="main details-body">
+        <h2 className="details-body__ingredients-title">Ingredientes</h2>
         <MapDetails arr={ arrFoodId } />
+        <h2 className="details-body__recipe-title">Modo de preparo</h2>
         <p data-testid="instructions">{strInstructions}</p>
         <iframe
           data-testid="video"
@@ -131,17 +145,18 @@ function ComidasDetails({ match: { params: { id } } }) {
           title="YouTube video player"
           frameBorder="0"
         />
+        <h2 className="details-body__recomendation-title">Experimente também!</h2>
         <MapRecomendation item={ drinkData } page="food" />
-      </div>
-      <button
-        data-testid="start-recipe-btn"
-        style={ { bottom: '0', position: 'fixed' } }
-        type="button"
-        onClick={ () => initRecipe(id) }
-      >
-        {textButton}
-      </button>
-    </div>
+        <button
+          className="details-body__start"
+          data-testid="start-recipe-btn"
+          type="button"
+          onClick={ () => initRecipe(id) }
+        >
+          {textButton}
+        </button>
+      </section>
+    </main>
   );
 }
 
