@@ -1,65 +1,19 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import copy from 'clipboard-copy';
 import { useHistory } from 'react-router-dom';
-import FetchAPI from '../components/FetchAPI';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
 export default function ReceitasFeitas() {
-  const doneRecipesDois = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  let idRecipesMeals = [];
-  let idRecipesDrinks = [];
-  const date = localStorage.getItem('date');
-  const [mealsList, setMeal] = useState();
-  const [drinksList, setDrinks] = useState();
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  const [recipeList, setRecipe] = useState(doneRecipes);
   const [showMessage, setShowMessage] = useState();
-  const [allRecipes, setAllRecipes] = useState({
-    meals: [],
-    drinks: [],
-  });
+  console.log(doneRecipes);
+
   const history = useHistory();
 
-  if (doneRecipesDois) {
-    const { meals, cocktails } = doneRecipesDois;
-    idRecipesMeals = Object.keys(meals);
-    idRecipesDrinks = Object.keys(cocktails);
-  }
-
-  const getMeals = useCallback(
-    async () => {
-      const arrMeals = [];
-      const arrDrinks = [];
-      const arrAllRecipes = [];
-
-      await Promise.all(idRecipesMeals.map(async (item) => {
-        const api = await FetchAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${item}`);
-        await arrMeals.push(api.meals[0]);
-        await arrAllRecipes.push(api.meals[0]);
-      }));
-
-      await Promise.all(idRecipesDrinks.map(async (item) => {
-        const api = await FetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${item}`);
-        await arrDrinks.push(api.drinks[0]);
-        await arrAllRecipes.push(api.drinks[0]);
-      }));
-
-      setMeal(arrMeals);
-      setDrinks(arrDrinks);
-      setAllRecipes({ meals: arrMeals, drinks: arrDrinks });
-    },
-    [idRecipesMeals, idRecipesDrinks],
-  );
-
-  useEffect(() => {
-    getMeals();
-  }, []);
-
-  if (!mealsList || !drinksList) {
-    return <p>Loading...</p>;
-  }
-
   function copyLink(id) {
-    copy(`https://localhost:3000/comidas/${id}`);
+    copy(`http://localhost:3000/comidas/${id}`);
     setShowMessage(true);
 
     const ONE_SECOND = 1000;
@@ -70,26 +24,24 @@ export default function ReceitasFeitas() {
   }
 
   function redirect(type, id) {
-    if (type === mealsList) {
+    if (type === 'comida') {
       history.push(`/comidas/${id}`);
     } else {
       history.push(`/bebidas/${id}`);
     }
   }
 
-  const { meals, drinks } = (allRecipes);
-
   function filterButton(type) {
     if (type === 'food') {
-      setAllRecipes({ meals: mealsList, drinks: [] });
+      setRecipe(doneRecipes.filter((el) => el.type === 'comida'));
     }
 
     if (type === 'drink') {
-      setAllRecipes({ meals: [], drinks: drinksList });
+      setRecipe(doneRecipes.filter((el) => el.type === 'bebida'));
     }
 
     if (type === undefined) {
-      setAllRecipes({ meals: mealsList, drinks: drinksList });
+      setRecipe(doneRecipes);
     }
   }
 
@@ -121,49 +73,57 @@ export default function ReceitasFeitas() {
         Drinks
       </button>
 
-      {meals
+      {recipeList
         .map(({
-          strMealThumb,
-          strCategory,
-          strMeal,
-          strTags,
-          strArea,
-          idMeal,
+          image,
+          category,
+          name,
+          tags,
+          area,
+          id,
+          doneDate,
+          alcoholicOrNot,
+          type,
         }, index) => (
           <>
             <img
               aria-hidden
               key={ index }
-              src={ strMealThumb }
+              src={ image }
               style={ { width: '340px' } }
-              alt={ strMealThumb }
+              alt={ name }
               data-testid={ `${index}-horizontal-image` }
-              onClick={ () => redirect(mealsList, idMeal) }
+              onClick={ () => redirect(type, id) }
             />
             <h3
               aria-hidden
               data-testid={ `${index}-horizontal-name` }
-              onClick={ () => redirect(mealsList, idMeal) }
+              onClick={ () => redirect(type, id) }
             >
-              {strMeal}
+              {name}
             </h3>
-            <p data-testid={ `${index}-horizontal-top-text` }>{strCategory}</p>
-            <p data-testid={ `${index}-${strTags}-horizontal-tag` }>{strTags}</p>
-            <p data-testid={ `${index}-horizontal-done-date` }>{date}</p>
-            <p>{strArea}</p>
-            <img
-              aria-hidden
-              src={ shareIcon }
-              alt="compartilhar"
-              data-testid={ `${index}-horizontal-share-btn` }
-              onClick={ () => copyLink(idMeal) }
-            />
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              {type === 'comida' ? `${area} - ${category}` : alcoholicOrNot}
+            </p>
+            <p data-testid={ `${index}-${tags[0]}-horizontal-tag` }>{tags[0]}</p>
+            <p data-testid={ `${index}-${tags[1] || ''}-horizontal-tag` }>{tags[1]}</p>
+            <p data-testid={ `${index}-horizontal-done-date` }>{doneDate}</p>
+            {/* <p>{area}</p> */}
+            <button type="button" onClick={ () => copyLink(id) }>
+              <img
+                aria-hidden
+                src={ shareIcon }
+                alt="compartilhar"
+                data-testid={ `${index}-horizontal-share-btn` }
+              />
+
+            </button>
             {showMessage && <p>Link copiado!</p>}
 
           </>
         ))}
 
-      {drinks.map(({ strDrinkThumb, strDrink, strAlcoholic, idDrink }, index) => (
+      {/* {drinks.map(({ strDrinkThumb, strDrink, strAlcoholic, idDrink }, index) => (
         <>
           <img
             aria-hidden
@@ -192,7 +152,7 @@ export default function ReceitasFeitas() {
           />
           {showMessage && <p>Link copiado!</p>}
         </>
-      ))}
+      ))} */}
     </div>
   );
 }
