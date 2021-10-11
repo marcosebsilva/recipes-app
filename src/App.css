@@ -103,8 +103,8 @@
 .categories {
   display: flex;
   height: 45px;
-  margin-bottom: 28px;
-  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-top: 60px;
   overflow-x: scroll;
 }
 

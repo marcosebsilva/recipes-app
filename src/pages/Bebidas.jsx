@@ -23,7 +23,6 @@ function Bebidas() {
   return (
     <>
       <Header searchBar title="Bebidas" />
-      <SearchBar />
       <MapCategories
         item={ drinkCategoriesData }
         handleClick={ handleClick }
