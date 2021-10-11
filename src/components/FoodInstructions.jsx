@@ -60,8 +60,9 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
   }, [localStorageKey, foodID, checkStorageHook]);
 
   return inLocalStorage ? (
-    <>
-      <ol>
+    <div className="main details-body">
+      <h2 className="details-body__ingredients-title">Ingredientes</h2>
+      <ol className="in-progress-body__instructions">
         {ingredients.map((ingredient, index) => (
           <li
             aria-hidden
@@ -70,18 +71,21 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
             data-testid={ `${index}-ingredient-step` }
           >
             <label htmlFor={ `${ingredient}` }>
-              { ingredient }
               <input
+                className="list-item"
                 type="checkbox"
                 value={ ingredient }
                 id={ ingredient }
                 defaultChecked={ inLocalStorage.includes(ingredient) }
               />
+              <span>{ ingredient }</span>
             </label>
           </li>))}
       </ol>
+      <h2 className="details-body__recipe-title">Modo de preparo</h2>
       <p data-testid="instructions">{ strInstructions }</p>
       <button
+        className="in-progress__finish"
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ disableButton }
@@ -89,7 +93,7 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
       >
         Finalizar receita
       </button>
-    </>
+    </div>
   ) : <p>Loading</p>;
 }
 

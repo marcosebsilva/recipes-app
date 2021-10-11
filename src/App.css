@@ -108,7 +108,7 @@
   overflow-x: scroll;
 }
 
-.categories::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: 0;
 }
 
@@ -277,7 +277,7 @@
   width: 100%;
 }
 
-.details-body__start {
+.details-body__start, .in-progress__finish {
   background-color: blue;
   border-radius: 5px 5px 0 0;
   bottom: 0;
@@ -285,6 +285,10 @@
   left: 50%;
   position: fixed;
   transform: translateX(-50%);
+}
+
+.in-progress__finish:disabled {
+  background-color: rgb(168, 167, 167);
 }
 
 .recomendation {
@@ -312,6 +316,10 @@
   height: 210px;
   justify-content: space-between;
   margin-right: 10px;
+}
+
+.list-item:checked + span {
+  text-decoration: line-through;
 }
 
 @keyframes fade-in {

@@ -124,7 +124,7 @@ export default function FoodCard({ recipe, foodType }) {
           src={ shareIcon }
         />
       </div>
-      {showMessage && <p>Link copiado!</p>}
+      {showMessage && <p className="copied-link">Link copiado!</p>}
     </div>
   );
 }
