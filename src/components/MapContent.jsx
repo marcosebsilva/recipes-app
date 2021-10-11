@@ -47,6 +47,8 @@ function MapContent({ item, divClick, page }) {
               />
               <p data-testid={ `${index}-card-name` }>{strDrink}</p>
             </div>))}
+        { console.log(item)}
+        ;
       </>
     );
   }

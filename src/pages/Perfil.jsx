@@ -5,6 +5,7 @@ import Header from '../components/Header';
 
 export default function Perfil() {
   const email = JSON.parse(localStorage.getItem('user'));
+
   const history = useHistory();
 
   function handleDoneRecipes() {

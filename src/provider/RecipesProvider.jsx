@@ -84,7 +84,7 @@ function RecipesProvider({ children }) {
   const filterById = useCallback(async (id, item) => {
     if (item === 'food') {
       const { meals } = await FetchAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
-      setArrFoodId(meals);
+      await setArrFoodId(meals);
     }
 
     if (item === 'drink') {
