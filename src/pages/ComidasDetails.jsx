@@ -114,7 +114,7 @@ function ComidasDetails({ match: { params: { id } } }) {
             {strCategory}
           </p>
         </section>
-        <div className="details-card__buttons">
+        <section className="details-card__buttons">
           <img
             data-testid="favorite-btn"
             src={ isFavorite ? favotiteHeartIcon : heartIcon }
@@ -129,7 +129,7 @@ function ComidasDetails({ match: { params: { id } } }) {
             onClick={ () => copyLink(id) }
             aria-hidden
           />
-        </div>
+        </section>
       </section>
       {showMessage && <div className="copied-link">Link copiado!</div>}
       <section className="main details-body">

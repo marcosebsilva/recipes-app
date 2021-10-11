@@ -57,8 +57,7 @@ export default function EmProgresso() {
   }, [recipe, fillIngredientsHook]);
 
   return (
-    <>
-      <h1>Teste</h1>
+    <main className="main-in-progress">
       {recipe && ingredients ? (
         <>
           <FoodCard recipe={ recipe } foodType={ foodType } />
@@ -69,6 +68,6 @@ export default function EmProgresso() {
           />
         </>
       ) : <p>Loading...</p>}
-    </>
+    </main>
   );
 }

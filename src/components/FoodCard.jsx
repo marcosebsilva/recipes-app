@@ -84,37 +84,46 @@ export default function FoodCard({ recipe, foodType }) {
   }, [checkFavoriteHook]);
 
   return (
-    <div>
+    <div className="in-progress-card">
       <img
-        className="food-photo"
+        className="food-photo in-progress-card__image"
+        style={ { width: '340px' } }
         alt="food"
         data-testid="recipe-photo"
         src={ recipe[`str${foodType}Thumb`] }
       />
-      <h2
-        data-testid="recipe-title"
-      >
-        {recipe[`str${foodType}`]}
-      </h2>
-      <h3
-        data-testid="recipe-category"
-      >
-        {recipe.strCategory}
-      </h3>
-      <img
-        data-testid="favorite-btn"
-        alt="Favorite icon"
-        onClick={ clickFavoriteButton }
-        src={ isFavorite ? favoriteIcon : notFavoriteIcon }
-        aria-hidden
-      />
-      <img
-        aria-hidden
-        data-testid="share-btn"
-        alt="Share icon"
-        onClick={ copyLink }
-        src={ shareIcon }
-      />
+      <section className="test">
+        <h3
+        // bad solution to avoid lint problem, instead of declaring a independent class
+          className="details-card__title"
+          data-testid="recipe-title"
+        >
+          {recipe[`str${foodType}`]}
+        </h3>
+        <p
+        // same as line 96
+          className="details-card__subtitle"
+          data-testid="recipe-category"
+        >
+          {recipe.strCategory}
+        </p>
+      </section>
+      <div className="in-progress-card__buttons">
+        <img
+          data-testid="favorite-btn"
+          alt="Favorite icon"
+          onClick={ clickFavoriteButton }
+          src={ isFavorite ? favoriteIcon : notFavoriteIcon }
+          aria-hidden
+        />
+        <img
+          aria-hidden
+          data-testid="share-btn"
+          alt="Share icon"
+          onClick={ copyLink }
+          src={ shareIcon }
+        />
+      </div>
       {showMessage && <p>Link copiado!</p>}
     </div>
   );
