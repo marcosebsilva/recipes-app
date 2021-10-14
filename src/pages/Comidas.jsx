@@ -15,6 +15,7 @@ function Comidas() {
   } = useContext(recipesContext);
 
   const food = (!arrFilteredFood) ? foodData : arrFilteredFood;
+  console.log(food);
   if (!foodData || !foodCategoriesData) {
     return <p>Loading...</p>;
   }

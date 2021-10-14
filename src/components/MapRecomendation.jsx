@@ -28,10 +28,11 @@ function MapRecomendation({ item, page }) {
 
   if (page === 'drink') {
     return (
-      <div className="card-recomendation">
+      <div className="recomendation">
         {item.filter((e, index) => index < SIX)
           .map(({ strMealThumb, strMeal }, index) => (
             <div
+              className="recomendation-card"
               data-testid={ `${index}-recomendation-card` }
               key={ index }
             >

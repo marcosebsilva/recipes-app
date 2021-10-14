@@ -86,38 +86,53 @@ function BebidasDetails({ match: { params: { id } } }) {
   };
 
   return (
-    <div>
-      <div>
+    <div className="main-details">
+      <section className="details-card">
         <img
+          className="details-card__image"
           data-testid="recipe-photo"
           style={ { width: '340px' } }
           src={ strDrinkThumb }
           alt={ strDrink }
         />
-        <h3 data-testid="recipe-title">{strDrink}</h3>
-        <p data-testid="recipe-category">{strAlcoholic}</p>
-        <img
-          data-testid="favorite-btn"
-          src={ isFavorite ? favotiteHeartIcon : heartIcon }
-          alt="Favoritar"
-          onClick={ () => clickFavoriteButton(id) }
-          aria-hidden
-        />
-        <img
-          aria-hidden
-          data-testid="share-btn"
-          src={ shareIcon }
-          alt="Compartilhar"
-          onClick={ () => copyLink(id) }
-        />
-        {showMessage && <p>Link copiado!</p>}
+        <section>
+          <h3 data-testid="recipe-title" className="details-card__title">{strDrink}</h3>
+          <p
+            data-testid="recipe-category"
+            className="details-card__subtitle"
+          >
+            {strAlcoholic}
+          </p>
+        </section>
+        <section className="details-card__buttons">
+          <img
+            data-testid="favorite-btn"
+            src={ isFavorite ? favotiteHeartIcon : heartIcon }
+            alt="Favoritar"
+            onClick={ () => clickFavoriteButton(id) }
+            aria-hidden
+          />
+          <img
+            aria-hidden
+            data-testid="share-btn"
+            src={ shareIcon }
+            alt="Compartilhar"
+            onClick={ () => copyLink(id) }
+          />
+        </section>
+      </section>
+      {showMessage && <div className="copied-link">Link copiado!</div>}
+      <section className="main details-body">
+        <h2 className="details-body__ingredientes-title">Ingredientes</h2>
         <MapDetails arr={ arrDrinkId } />
+        <h2 className="details-body__recipe-title">Modo de preparo</h2>
         <p data-testid="instructions">{strInstructions}</p>
-        <MapRecomendation item={ foodData } page="drink" />
-      </div>
+      </section>
+      <h2 className="details-body__recomendation-title">Experimente também!</h2>
+      <MapRecomendation item={ foodData } page="drink" />
       <button
+        className="details-body__start"
         data-testid="start-recipe-btn"
-        style={ { bottom: '0', position: 'fixed' } }
         type="button"
         onClick={ () => initRecipe(id) }
       >

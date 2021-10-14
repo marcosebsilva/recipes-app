@@ -7,6 +7,8 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
   const [disableButton, setDisableButton] = useState(true);
   const history = useHistory();
 
+  console.log(recipe);
+
   const { strInstructions } = recipe;
 
   const foodID = recipe[`id${foodType}`];
@@ -34,6 +36,7 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
     };
 
     localStorage.setItem('inProgressRecipes', JSON.stringify({ ...newStorage }));
+
     enableButton();
   }
 
@@ -58,6 +61,40 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
       setInLocalStorage([]);
     }
   }, [localStorageKey, foodID, checkStorageHook]);
+
+  function clickHandler() {
+    const local = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+    const date = new Date();
+    const newDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+
+    const done = foodType === 'Drink'
+      ? {
+        id: recipe.idDrink,
+        type: 'bebida',
+        area: '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+        doneDate: newDate,
+        tags: [''],
+      }
+      : {
+        id: recipe.idMeal,
+        type: 'comida',
+        area: recipe.strArea,
+        category: recipe.strCategory,
+        alcoholicOrNot: '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+        doneDate: newDate,
+        tags: recipe.strTags.split(','),
+      };
+    const doneRecipes = [...local, done];
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+
+    history.push('/receitas-feitas');
+  }
 
   return inLocalStorage ? (
     <div className="main details-body">
@@ -89,7 +126,7 @@ export default function FoodInstructions({ ingredients, recipe, foodType }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ disableButton }
-        onClick={ () => history.push('/receitas-feitas') }
+        onClick={ clickHandler }
       >
         Finalizar receita
       </button>
